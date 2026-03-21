@@ -150,6 +150,63 @@ async function parseResponse(response: Response): Promise<ParsedResponse> {
 // Public API
 // -----------------------------------------------------------------------------
 
+/** Combined result containing both the TestResult and the raw parsed response body. */
+export interface ApiTestResultWithResponse {
+  result: TestResult;
+  /** Parsed JSON body (or null if non-JSON). Used by suite-runner for saveAs extraction. */
+  responseBody: unknown;
+}
+
+/**
+ * Runs a single API test case and returns both the TestResult and the raw
+ * parsed response body. The suite-runner uses the response body for saveAs
+ * variable extraction via the variable-interpolator.
+ */
+export async function runApiTestWithResponse(
+  testCase: ApiTestCase,
+): Promise<ApiTestResultWithResponse> {
+  const startTime = performance.now();
+
+  try {
+    const requestInit = buildRequestInit(testCase);
+    const response = await fetch(testCase.url, requestInit);
+    const parsedResponse = await parseResponse(response);
+
+    const assertionResults = testCase.assertions.map((assertion) =>
+      evaluateAssertion(assertion, parsedResponse),
+    );
+
+    const allPassed = assertionResults.every((r) => r.passed);
+    const duration = Math.round(performance.now() - startTime);
+
+    return {
+      result: {
+        name: testCase.name,
+        type: 'api',
+        status: allPassed ? 'pass' : 'fail',
+        duration,
+        assertions: assertionResults,
+      },
+      responseBody: parsedResponse.bodyJson,
+    };
+  } catch (networkError) {
+    const duration = Math.round(performance.now() - startTime);
+    const errorMessage =
+      networkError instanceof Error ? networkError.message : String(networkError);
+
+    return {
+      result: {
+        name: testCase.name,
+        type: 'api',
+        status: 'error',
+        duration,
+        error: errorMessage,
+      },
+      responseBody: null,
+    };
+  }
+}
+
 /**
  * Runs a single API test case: makes the HTTP request, evaluates all assertions,
  * and returns a TestResult with pass/fail status and per-assertion details.

@@ -172,6 +172,150 @@ export interface RunUiTestOptions {
   screenshotDir?: string;
 }
 
+/** Combined result containing both the TestResult and a getText callback for saveAs extraction. */
+export interface UiTestResultWithPage {
+  result: TestResult;
+  /** Async callback to extract visible text from a selector on the page. Null if page is unavailable. */
+  getText: ((selector: string) => Promise<string>) | null;
+}
+
+/**
+ * Execute a UI test case and return both the TestResult and a getText callback
+ * bound to the page. The suite-runner uses getText for saveAs variable extraction.
+ *
+ * IMPORTANT: The caller MUST call cleanup() when done with getText to close the
+ * browser context. If getText is not needed, cleanup is called automatically.
+ */
+export async function runUiTestWithPage(
+  testCase: UiTestCase,
+  options?: RunUiTestOptions,
+): Promise<UiTestResultWithPage & { cleanup: () => Promise<void> }> {
+  const startTime = Date.now();
+  const screenshotDir = options?.screenshotDir ?? DEFAULT_SCREENSHOT_DIR;
+  const assertions: AssertionResult[] = [];
+
+  await launchBrowser();
+
+  let context: BrowserContext | null = null;
+  let page: Page | null = null;
+
+  try {
+    context = await browserInstance!.newContext();
+    context.setDefaultTimeout(DEFAULT_TIMEOUT_MS);
+    page = await context.newPage();
+
+    page.on('pageerror', () => {});
+
+    await page.goto(testCase.url, { waitUntil: 'domcontentloaded' });
+
+    for (const step of testCase.steps) {
+      try {
+        switch (step.action) {
+          case 'navigate':
+            await executeNavigate(page, step, testCase.url);
+            break;
+          case 'click':
+            await executeClick(page, step);
+            break;
+          case 'fill':
+            await executeFill(page, step);
+            break;
+          case 'waitFor':
+            await executeWaitFor(page, step);
+            break;
+          case 'assertText': {
+            const assertionResult = await executeAssertText(page, step);
+            assertions.push(assertionResult);
+            if (!assertionResult.passed) {
+              const screenshotPath = await captureFailureScreenshot(page, testCase.name, screenshotDir);
+              const result: TestResult = {
+                name: testCase.name,
+                type: 'ui',
+                status: 'fail',
+                duration: Date.now() - startTime,
+                assertions,
+                error: `Assertion failed: expected "${assertionResult.expected}" but got "${assertionResult.actual}"`,
+                screenshot: screenshotPath,
+              };
+              // Close context on failure — no getText needed
+              await context.close().catch(() => {});
+              return { result, getText: null, cleanup: async () => {} };
+            }
+            break;
+          }
+          case 'login':
+            await executeLogin(page, step);
+            break;
+          case 'logout':
+            await executeLogout(page, step);
+            break;
+          default:
+            throw new Error(`Unknown step action: ${(step as UiStep).action}`);
+        }
+      } catch (stepError) {
+        const errorMessage = stepError instanceof Error ? stepError.message : String(stepError);
+        const screenshotPath = await captureFailureScreenshot(page, testCase.name, screenshotDir);
+        const result: TestResult = {
+          name: testCase.name,
+          type: 'ui',
+          status: 'error',
+          duration: Date.now() - startTime,
+          assertions: assertions.length > 0 ? assertions : undefined,
+          error: `Step "${step.action}" failed: ${errorMessage}`,
+          screenshot: screenshotPath,
+        };
+        await context.close().catch(() => {});
+        return { result, getText: null, cleanup: async () => {} };
+      }
+    }
+
+    // All steps passed — keep page alive for saveAs getText
+    const boundPage = page;
+    const boundContext = context;
+    const getText = async (selector: string): Promise<string> => {
+      await boundPage.waitForSelector(selector, { state: 'visible', timeout: DEFAULT_TIMEOUT_MS });
+      const element = boundPage.locator(selector).first();
+      const text = (await element.textContent()) ?? '';
+      return text.trim();
+    };
+    const cleanup = async () => {
+      await boundContext.close().catch(() => {});
+    };
+
+    return {
+      result: {
+        name: testCase.name,
+        type: 'ui',
+        status: 'pass',
+        duration: Date.now() - startTime,
+        assertions: assertions.length > 0 ? assertions : undefined,
+      },
+      getText,
+      cleanup,
+    };
+  } catch (outerError) {
+    const errorMessage = outerError instanceof Error ? outerError.message : String(outerError);
+    const screenshotPath = page
+      ? await captureFailureScreenshot(page, testCase.name, screenshotDir)
+      : undefined;
+    if (context) {
+      await context.close().catch(() => {});
+    }
+    return {
+      result: {
+        name: testCase.name,
+        type: 'ui',
+        status: 'error',
+        duration: Date.now() - startTime,
+        error: `Test execution error: ${errorMessage}`,
+        screenshot: screenshotPath,
+      },
+      getText: null,
+      cleanup: async () => {},
+    };
+  }
+}
+
 /**
  * Execute a UI test case by driving a Playwright browser through its steps.
  *
