@@ -33,20 +33,20 @@
 ---
 
 ### Task 2.2: JSON Editor Component (CodeMirror 6) [Frontend]
-**Status**: [NOT STARTED]
-**Estimated**: 3 hours | **Actual**: - hours
+**Status**: [COMPLETE]
+**Estimated**: 3 hours | **Actual**: 1 hours
 **Story Points**: 5
 **Wireframe**: 01-main-screen.md
 
 **Deliverables**:
-- [ ] src/client/components/Editor/JsonEditor.tsx
-- [ ] src/client/components/Editor/index.ts
+- [x] src/client/components/Editor/JsonEditor.tsx
+- [x] src/client/components/Editor/index.ts
 
 **Acceptance Criteria**:
-- [ ] [FR6.3] CodeMirror 6 with JSON syntax highlighting
-- [ ] JSON validation errors shown inline
-- [ ] Resizable panel width
-- [ ] Dark theme support
+- [x] [FR6.3] CodeMirror 6 with JSON syntax highlighting
+- [x] JSON validation errors shown inline
+- [x] Resizable panel width
+- [x] Dark theme support
 
 ---
 
