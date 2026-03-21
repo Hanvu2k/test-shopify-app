@@ -65,20 +65,20 @@
 ---
 
 ### Task 3.4: CLI Mode [Backend]
-**Status**: [NOT STARTED]
-**Estimated**: 2 hours | **Actual**: - hours
+**Status**: [COMPLETE]
+**Estimated**: 2 hours | **Actual**: 0.5 hours
 **Story Points**: 3
 **Wireframe**: -
 
 **Deliverables**:
-- [ ] src/cli.ts
+- [x] src/cli.ts
 
 **Acceptance Criteria**:
-- [ ] [FR7.1] Runs via `npx tsx src/cli.ts <file.json>`
-- [ ] [FR7.2] Stdout: per-test detailed results (name, status, assertion details)
-- [ ] [FR7.3] Stderr: JSON summary { total, passed, failed, duration }
-- [ ] [FR7.4] Exit code 0 if all pass, 1 if any fail
-- [ ] [FR7.5] Detailed error on failure (expected vs actual)
+- [x] [FR7.1] Runs via `npx tsx src/cli.ts <file.json>`
+- [x] [FR7.2] Stdout: per-test detailed results (name, status, assertion details)
+- [x] [FR7.3] Stderr: JSON summary { total, passed, failed, duration }
+- [x] [FR7.4] Exit code 0 if all pass, 1 if any fail
+- [x] [FR7.5] Detailed error on failure (expected vs actual)
 
 ---
 
