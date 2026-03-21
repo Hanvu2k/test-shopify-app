@@ -179,17 +179,17 @@
 ## Notes
 
 ### Task 1.6: Code Review: Sprint 1 [Reviewer]
-**Status**: [NOT STARTED]
-**Estimated**: 1 hour | **Actual**: - hours
+**Status**: [COMPLETE]
+**Estimated**: 1 hour | **Actual**: 1 hours
 **Story Points**: 2
 **Wireframe**: -
 
 **Deliverables**:
-- [ ] Code review report for all Sprint 1 tasks
+- [x] Code review report for all Sprint 1 tasks
 
 **Acceptance Criteria**:
-- [ ] All code reviewed for quality, security, correctness
-- [ ] LGTM or issues reported
+- [x] All code reviewed for quality, security, correctness
+- [x] LGTM or issues reported
 
 ---
 
