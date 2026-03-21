@@ -66,21 +66,21 @@
 ---
 
 ### Task 1.4: Playwright Runner [Backend]
-**Status**: [NOT STARTED]
-**Estimated**: 4 hours | **Actual**: - hours
+**Status**: [COMPLETE]
+**Estimated**: 4 hours | **Actual**: 2 hours
 **Story Points**: 5
 **Wireframe**: -
 
 **Deliverables**:
-- [ ] src/core/playwright-runner.ts
+- [x] src/core/playwright-runner.ts
 
 **Acceptance Criteria**:
-- [ ] [FR3.1] Launches Chromium headless:false
-- [ ] [FR3.2] Navigates to specified URL
-- [ ] [FR3.3] Executes click, fill, waitFor, assertText steps
-- [ ] [FR3.4] Supports login flow (fill email + password + submit)
-- [ ] [FR3.6] Extracts UI element text for saveAs
-- [ ] [FR3.7] Captures screenshot on failure → screenshots/
+- [x] [FR3.1] Launches Chromium headless:false
+- [x] [FR3.2] Navigates to specified URL
+- [x] [FR3.3] Executes click, fill, waitFor, assertText steps
+- [x] [FR3.4] Supports login flow (fill email + password + submit)
+- [x] [FR3.6] Extracts UI element text for saveAs
+- [x] [FR3.7] Captures screenshot on failure → screenshots/
 
 ---
 
