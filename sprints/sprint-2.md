@@ -92,23 +92,26 @@
 ---
 
 ### Task 2.5: History Panel + URL Preview + Hooks [Frontend]
-**Status**: [NOT STARTED]
-**Estimated**: 2 hours | **Actual**: - hours
+**Status**: [COMPLETE]
+**Estimated**: 2 hours | **Actual**: 2 hours
 **Story Points**: 3
 **Wireframe**: 03-history-panel.md
 
 **Deliverables**:
-- [ ] src/client/components/History/HistoryPanel.tsx
-- [ ] src/client/components/Preview/UrlPreview.tsx
-- [ ] src/client/hooks/useTestRun.ts
-- [ ] src/client/hooks/useSSE.ts
+- [x] src/client/components/History/HistoryPanel.tsx
+- [x] src/client/components/History/index.ts
+- [x] src/client/components/Preview/UrlPreview.tsx
+- [x] src/client/components/Preview/index.ts
+- [x] src/client/hooks/useTestRun.ts
+- [x] src/client/hooks/useSSE.ts
+- [x] src/client/hooks/index.ts
 
 **Acceptance Criteria**:
-- [ ] [FR6.8] History list shows past runs with date, suite name, pass/fail count
-- [ ] Click to view past run details
-- [ ] [FR6.10] URL preview iframe or link to target page
-- [ ] useSSE hook handles EventSource connection
-- [ ] useTestRun hook manages run state, results, abort
+- [x] [FR6.8] History list shows past runs with date, suite name, pass/fail count
+- [x] Click to view past run details
+- [x] [FR6.10] URL preview iframe or link to target page
+- [x] useSSE hook handles SSE streaming via fetch/ReadableStream (POST-based)
+- [x] useTestRun hook manages run state, results, abort
 
 ---
 
