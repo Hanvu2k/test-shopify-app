@@ -45,6 +45,6 @@
 - No self-testing — this IS the test tool
 
 ## Sprint 0 Decisions
-- Wireframes = No
-- Tech Stack = PENDING
-- Team = PENDING
+- Wireframes = Yes
+- Tech Stack = APPROVED (React+Vite, Express, TailwindCSS, CodeMirror 6, Playwright, TypeScript)
+- Team = APPROVED (meta-react-architect, netflix-backend-architect, google-code-reviewer, google-qa-engineer, netflix-devops-engineer, apple-ux-wireframer)
