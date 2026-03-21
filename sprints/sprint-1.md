@@ -178,6 +178,40 @@
 
 ## Notes
 
+### Task 1.6: Code Review: Sprint 1 [Reviewer]
+**Status**: [NOT STARTED]
+**Estimated**: 1 hour | **Actual**: - hours
+**Story Points**: 2
+**Wireframe**: -
+
+**Deliverables**:
+- [ ] Code review report for all Sprint 1 tasks
+
+**Acceptance Criteria**:
+- [ ] All code reviewed for quality, security, correctness
+- [ ] LGTM or issues reported
+
+---
+
+### Task 1.7: QA: Test Sprint 1 tasks [QA]
+**Status**: [NOT STARTED]
+**Estimated**: 2 hours | **Actual**: - hours
+**Story Points**: 3
+**Wireframe**: -
+
+**Deliverables**:
+- [ ] Unit tests for core modules
+- [ ] Test report
+
+**Acceptance Criteria**:
+- [ ] Core engine modules tested
+- [ ] 80%+ coverage on new code
+- [ ] QA sign-off
+
+---
+
+## Notes
+
 - All code in src/core/ directory — shared between Web UI and CLI
 - Tasks 1.2, 1.3, 1.4 can run in parallel after 1.1 completes
 - Task 1.5 depends on 1.2, 1.3, 1.4
