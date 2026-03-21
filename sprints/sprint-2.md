@@ -72,8 +72,8 @@
 ---
 
 ### Task 2.4: Toolbar Component (Run/Abort/Save/Load/URL) [Frontend]
-**Status**: [NOT STARTED]
-**Estimated**: 3 hours | **Actual**: - hours
+**Status**: [COMPLETE]
+**Estimated**: 3 hours | **Actual**: 1.5 hours
 **Story Points**: 5
 **Wireframe**: 01-main-screen.md
 
