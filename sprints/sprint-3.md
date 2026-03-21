@@ -178,6 +178,42 @@
 
 ## Notes
 
+### Task 3.6: Code Review: Sprint 3 [Reviewer]
+**Status**: [NOT STARTED]
+**Estimated**: 1 hour | **Actual**: - hours
+**Story Points**: 2
+**Wireframe**: -
+
+**Deliverables**:
+- [ ] Code review report for all Sprint 3 tasks
+
+**Acceptance Criteria**:
+- [ ] All code reviewed for quality, security, correctness
+- [ ] LGTM or issues reported
+
+---
+
+### Task 3.7: QA: Test Sprint 3 tasks [QA]
+**Status**: [NOT STARTED]
+**Estimated**: 2 hours | **Actual**: - hours
+**Story Points**: 3
+**Wireframe**: -
+
+**Deliverables**:
+- [ ] Integration tests for API endpoints
+- [ ] E2E tests for Web UI → Backend flow
+- [ ] Test report
+
+**Acceptance Criteria**:
+- [ ] All API endpoints tested
+- [ ] SSE streaming tested end-to-end
+- [ ] CLI mode tested
+- [ ] QA sign-off
+
+---
+
+## Notes
+
 - Backend tasks (3.1-3.4) can start immediately after Sprint 1
 - Task 3.5 (integration) depends on both Sprint 2 frontend and Sprint 3 backend routes
 - CLI shares core engine with server — no duplication
