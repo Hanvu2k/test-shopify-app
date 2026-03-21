@@ -25,7 +25,7 @@
 - [x] Phase 0: Project Initialization
 - [x] Phase 1: Requirements (BA) — srs.md + user-stories.md complete
 - [ ] Phase 2a: System Design (CTO) — tech-stack.md + architecture.md complete
-- [ ] Phase 2b: UX Design — wireframes in progress
+- [x] Phase 2b: UX Design — 5 wireframe screens complete
 - [ ] Phase 3: Development
 - [ ] Phase 4: Testing
 - [ ] Phase 5: Packaging
