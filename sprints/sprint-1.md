@@ -47,21 +47,21 @@
 ---
 
 ### Task 1.3: API Runner [Backend]
-**Status**: [NOT STARTED]
-**Estimated**: 3 hours | **Actual**: - hours
+**Status**: [COMPLETE]
+**Estimated**: 3 hours | **Actual**: 1 hours
 **Story Points**: 5
 **Wireframe**: -
 
 **Deliverables**:
-- [ ] src/core/api-runner.ts
+- [x] src/core/api-runner.ts
 
 **Acceptance Criteria**:
-- [ ] [FR2.1] Makes HTTP request with correct method/url/body
-- [ ] [FR2.2] Asserts status code matches expected
-- [ ] [FR2.3] Asserts body contains expected string
-- [ ] [FR2.4] Asserts JSON path matches expected value
+- [x] [FR2.1] Makes HTTP request with correct method/url/body
+- [x] [FR2.2] Asserts status code matches expected
+- [x] [FR2.3] Asserts body contains expected string
+- [x] [FR2.4] Asserts JSON path matches expected value
 - [ ] [FR2.5] Extracts value from response body via JSON path (saveAs)
-- [ ] Returns TestResult with pass/fail + assertion details
+- [x] Returns TestResult with pass/fail + assertion details
 
 ---
 
