@@ -194,19 +194,19 @@
 ---
 
 ### Task 1.7: QA: Test Sprint 1 tasks [QA]
-**Status**: [NOT STARTED]
-**Estimated**: 2 hours | **Actual**: - hours
+**Status**: [COMPLETE]
+**Estimated**: 2 hours | **Actual**: 2 hours
 **Story Points**: 3
 **Wireframe**: -
 
 **Deliverables**:
-- [ ] Unit tests for core modules
-- [ ] Test report
+- [x] Unit tests for core modules
+- [x] Test report
 
 **Acceptance Criteria**:
-- [ ] Core engine modules tested
-- [ ] 80%+ coverage on new code
-- [ ] QA sign-off
+- [x] Core engine modules tested
+- [x] 80%+ coverage on new code (91.07% statements, 89.25% branches, 100% functions)
+- [x] QA sign-off
 
 ---
 
