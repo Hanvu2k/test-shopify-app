@@ -28,21 +28,21 @@
 ---
 
 ### Task 3.2: /api/run Endpoint (SSE Streaming) [Backend]
-**Status**: [NOT STARTED]
-**Estimated**: 3 hours | **Actual**: - hours
+**Status**: [COMPLETE]
+**Estimated**: 3 hours | **Actual**: 1 hours
 **Story Points**: 5
 **Wireframe**: -
 
 **Deliverables**:
-- [ ] src/server/routes/run.ts
+- [x] src/server/routes/run.ts
 
 **Acceptance Criteria**:
-- [ ] [FR6.5] POST /api/run accepts test suite JSON body
-- [ ] Calls suite-runner.run() with SSE event callback
-- [ ] Each test result streamed as SSE event to client
-- [ ] [FR6.6] POST /api/abort cancels running suite
-- [ ] Summary event sent when suite completes
-- [ ] Handles errors gracefully (invalid JSON, runner errors)
+- [x] [FR6.5] POST /api/run accepts test suite JSON body
+- [x] Calls suite-runner.run() with SSE event callback
+- [x] Each test result streamed as SSE event to client
+- [x] [FR6.6] POST /api/abort cancels running suite
+- [x] Summary event sent when suite completes
+- [x] Handles errors gracefully (invalid JSON, runner errors)
 
 ---
 
