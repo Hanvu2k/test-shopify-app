@@ -11,19 +11,19 @@
 ## Task Details
 
 ### Task 3.1: Express Server + SSE Middleware [Backend]
-**Status**: [NOT STARTED]
-**Estimated**: 2 hours | **Actual**: - hours
+**Status**: [COMPLETE]
+**Estimated**: 2 hours | **Actual**: 1 hours
 **Story Points**: 3
 **Wireframe**: -
 
 **Deliverables**:
-- [ ] src/server/index.ts (Express app, CORS, static serving)
-- [ ] src/server/middleware/sse.ts (SSE helper: setHeaders, sendEvent, close)
+- [x] src/server/index.ts (Express app, CORS, static serving)
+- [x] src/server/middleware/sse.ts (SSE helper: setHeaders, sendEvent, close)
 
 **Acceptance Criteria**:
-- [ ] [FR6.2] Express server runs on port 3737
-- [ ] CORS configured for Vite dev server (port 5273)
-- [ ] SSE middleware correctly sets headers and streams events
+- [x] [FR6.2] Express server runs on port 3737
+- [x] CORS configured for Vite dev server (port 5273)
+- [x] SSE middleware correctly sets headers and streams events
 
 ---
 
