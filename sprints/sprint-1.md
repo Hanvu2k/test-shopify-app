@@ -114,7 +114,7 @@
 | 1.4 | Playwright runner | 5 | COMPLETE | Backend | - |
 | 1.5 | Suite runner orchestrator | 5 | COMPLETE | Backend | - |
 | 1.6 | Code Review: Sprint 1 | 2 | COMPLETE | Reviewer | - |
-| 1.7 | QA: Test Sprint 1 tasks | 3 | | QA | - |
+| 1.7 | QA: Test Sprint 1 tasks | 3 | COMPLETE | QA | - |
 
 ---
 
