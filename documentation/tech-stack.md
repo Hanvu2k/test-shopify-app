@@ -1,8 +1,8 @@
-# Tech Stack: [PROJECT_NAME]
+# Tech Stack: Wishlist Tester
 
-**Project ID**: [PROJECT_ID]
+**Project ID**: wishlist-tester-2026-03
 **Author**: CTO - Super Agent Company
-**Date**: [DATE]
+**Date**: 2026-03-21
 **Status**: PENDING APPROVAL
 
 ---
@@ -11,93 +11,108 @@
 
 | Layer | Technology | Version | Rationale |
 |-------|-----------|---------|-----------|
-| Frontend | [React/Next.js/Vue] | [X.x] | [Why chosen] |
-| UI Library | [TailwindCSS/MUI/etc] | [X.x] | [Why chosen] |
-| Language | [TypeScript/JavaScript] | [X.x] | [Why chosen] |
-| Backend | [Node.js/Python/Go] | [X.x] | [Why chosen] |
-| Framework | [Express/FastAPI/Gin] | [X.x] | [Why chosen] |
-| ORM | [Prisma/TypeORM/SQLAlchemy] | [X.x] | [Why chosen] |
-| Database | [PostgreSQL/MongoDB] | [X.x] | [Why chosen] |
-| Cache | [Redis/Memcached] | [X.x] | [Why chosen] |
-| Auth | [NextAuth/Passport/JWT] | [X.x] | [Why chosen] |
-| Deployment | [Vercel/AWS/GCP] | - | [Why chosen] |
-| CI/CD | [GitHub Actions/GitLab CI] | - | [Why chosen] |
+| Frontend | React | 18.x | Client specified, SPA dev tool |
+| Build Tool | Vite | 5.x | Client specified, fast HMR |
+| UI Library | TailwindCSS | 3.x | Utility-first, rapid dev tool styling |
+| JSON Editor | CodeMirror 6 | 6.x | Mature, extensible, JSON syntax highlighting + validation |
+| Language | TypeScript | 5.x | Client specified (tsx, .ts throughout) |
+| Backend | Express | 4.x | Client specified, SSE streaming support |
+| Runtime | Node.js | 20+ | LTS, TypeScript support via tsx |
+| Browser Automation | Playwright | 1.x | Client specified for UI tests |
+| Database | None | - | File-based storage (test-suites/*.json) |
 
 ---
 
 ## Frontend Stack
 
 ### Core
-- **Framework**: [Next.js 14+ / React 18+ / Vue 3]
+- **Framework**: React 18 (SPA mode, no SSR needed)
 - **Language**: TypeScript 5.x
-- **Styling**: [TailwindCSS / CSS Modules / Styled Components]
-- **State Management**: [Zustand / Redux / React Context]
-- **Data Fetching**: [TanStack Query / SWR / RTK Query]
+- **Build**: Vite 5.x (dev server port 5273)
+- **Styling**: TailwindCSS 3.x
+- **State Management**: React useState/useReducer (simple state, no external store needed)
 
-### UI Components
-- **Component Library**: [shadcn/ui / MUI / Ant Design / Custom]
-- **Icons**: [Lucide / Heroicons / FontAwesome]
-- **Animations**: [Framer Motion / CSS Transitions]
+### Key Libraries
+- **CodeMirror 6**: JSON editor with syntax highlighting, linting, autocompletion
+- **EventSource API**: Native browser SSE for streaming test results
+- **lucide-react**: Icons
 
-### Build & Dev
-- **Bundler**: [Vite / Turbopack / Webpack]
-- **Linting**: ESLint + Prettier
-- **Testing**: [Jest / Vitest] + [Playwright / Cypress]
+### UI Layout
+- Split panel: left = JSON editor, right = results stream
+- Top bar: URL input, Run/Abort buttons, Save/Load, History
 
 ---
 
 ## Backend Stack
 
 ### Core
-- **Runtime**: [Node.js 20+ / Python 3.11+ / Go 1.21+]
-- **Framework**: [Express / FastAPI / Gin / Spring Boot]
-- **Language**: [TypeScript / Python / Go / Java]
+- **Runtime**: Node.js 20+ LTS
+- **Framework**: Express 4.x
+- **Language**: TypeScript 5.x (via tsx runtime)
+- **API Style**: REST + SSE (Server-Sent Events)
 
-### Database
-- **Primary**: [PostgreSQL 16 / MongoDB 7 / MySQL 8]
-- **ORM/ODM**: [Prisma / TypeORM / SQLAlchemy / Mongoose]
-- **Migrations**: [Prisma Migrate / Alembic / golang-migrate]
+### Test Runners
+- **API Runner**: Native `fetch` API for HTTP requests
+- **UI Runner**: Playwright (Chromium, headless:false)
+- **Variable Interpolation**: Custom template engine ({{varName}} syntax)
 
-### Caching & Queues
-- **Cache**: [Redis 7 / Memcached]
-- **Message Queue**: [BullMQ / RabbitMQ / SQS]
-- **Background Jobs**: [BullMQ / Celery / Temporal]
-
-### Authentication
-- **Strategy**: [JWT + Refresh Tokens / OAuth2 / Session]
-- **Library**: [NextAuth.js / Passport.js / FastAPI Security]
-- **Password Hashing**: [bcrypt / Argon2]
+### File Storage
+- **Test Suites**: JSON files in `test-suites/` directory
+- **Screenshots**: Saved to `screenshots/` on UI test failure
+- **Run History**: In-memory (runtime only) or simple JSON log file
 
 ---
 
-## Infrastructure
+## API Endpoints
 
-### Cloud Provider
-- **Primary**: [AWS / GCP / Azure / Vercel]
-- **Region**: [us-east-1 / ap-southeast-1]
-- **Multi-AZ**: [Yes / No]
-
-### Deployment
-- **Container**: [Docker / Podman]
-- **Orchestration**: [Kubernetes / ECS / Cloud Run]
-- **CI/CD**: [GitHub Actions / GitLab CI / CircleCI]
-
-### Monitoring
-- **APM**: [DataDog / New Relic / Sentry]
-- **Logging**: [CloudWatch / Loki / ELK]
-- **Metrics**: [Prometheus + Grafana / CloudWatch]
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| POST | /api/run | Start test suite execution, returns SSE stream |
+| POST | /api/abort | Abort running test suite |
+| GET | /api/suites | List saved test suite files |
+| GET | /api/suites/:name | Load specific test suite |
+| POST | /api/suites/:name | Save test suite to file |
+| GET | /api/history | Get recent test run history |
 
 ---
 
-## Third-Party Services
+## Project Structure
 
-| Service | Provider | Purpose |
-|---------|----------|---------|
-| Email | [SendGrid / Resend / SES] | Transactional emails |
-| Storage | [S3 / Cloudflare R2 / GCS] | File uploads |
-| CDN | [CloudFront / Cloudflare] | Static assets |
-| Payments | [Stripe / PayPal] | Payment processing |
-| Analytics | [Mixpanel / PostHog / GA4] | Product analytics |
+```
+src/
+├── client/                  # React frontend (Vite)
+│   ├── index.html
+│   ├── main.tsx
+│   ├── App.tsx
+│   ├── components/
+│   │   ├── Editor/          # JSON editor (CodeMirror)
+│   │   ├── Results/         # SSE result stream display
+│   │   ├── History/         # Run history panel
+│   │   ├── Toolbar/         # Run/Abort/Save/Load buttons
+│   │   └── Preview/         # Target URL preview
+│   ├── hooks/               # Custom React hooks (useSSE, useTestRun)
+│   └── styles/              # TailwindCSS config
+│
+├── server/                  # Express backend
+│   ├── index.ts             # Express app entry
+│   ├── routes/
+│   │   ├── run.ts           # POST /api/run (SSE streaming)
+│   │   ├── suites.ts        # CRUD test suites
+│   │   └── history.ts       # Run history
+│   └── middleware/
+│       └── sse.ts           # SSE helper middleware
+│
+├── core/                    # Test execution engine (shared)
+│   ├── suite-runner.ts      # Orchestrator
+│   ├── api-runner.ts        # HTTP test runner
+│   ├── playwright-runner.ts # Browser automation runner
+│   ├── variable-interpolator.ts # {{varName}} replacement
+│   └── types.ts             # TypeScript interfaces
+│
+├── cli.ts                   # CLI entry point
+├── test-suites/             # Saved test suite JSON files
+└── screenshots/             # UI test failure screenshots
+```
 
 ---
 
@@ -107,38 +122,47 @@
 ```bash
 node >= 20.0.0
 npm >= 10.0.0
-docker >= 24.0.0
 ```
 
 ### Local Development
 ```bash
-# Clone and install
-git clone [repo-url]
+# Install dependencies
 npm install
 
-# Environment
-cp .env.example .env.local
+# Run both frontend + backend in dev mode
+npm run dev           # Starts Vite (5273) + Express (3737) concurrently
 
-# Database
-docker-compose up -d
-npx prisma db push
-
-# Run
-npm run dev
+# CLI mode
+npx tsx src/cli.ts test-suites/example.json
 ```
 
 ---
 
 ## Stack Decisions (ADRs)
 
-### ADR-001: [Decision Title]
-- **Date**: [DATE]
+### ADR-001: No Database
+- **Date**: 2026-03-21
 - **Status**: Accepted
-- **Context**: [Why decision needed]
-- **Decision**: [What was decided]
-- **Consequences**: [Trade-offs]
+- **Context**: Dev tool, test suites are JSON files, no user accounts
+- **Decision**: File-based storage, no database needed
+- **Consequences**: Simple deployment, no DB setup, limited query capability (acceptable)
+
+### ADR-002: CodeMirror 6 for JSON Editor
+- **Date**: 2026-03-21
+- **Status**: Accepted
+- **Context**: Need syntax highlighting + JSON validation in editor
+- **Decision**: CodeMirror 6 — mature, extensible, good JSON mode
+- **Alternatives**: Monaco (too heavy for this use case), Ace (older API)
+- **Consequences**: Lighter bundle than Monaco, excellent JSON support
+
+### ADR-003: Monorepo with Shared Core
+- **Date**: 2026-03-21
+- **Status**: Accepted
+- **Context**: CLI and Web UI share test execution engine
+- **Decision**: Single repo, `core/` directory shared between CLI and server
+- **Consequences**: Code reuse, single `npm install`, simpler development
 
 ---
 
-**Approved By**: [CTO Name]
-**Review Date**: [DATE]
+**Approved By**: CTO
+**Review Date**: 2026-03-21
