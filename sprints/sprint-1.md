@@ -85,22 +85,22 @@
 ---
 
 ### Task 1.5: Suite Runner Orchestrator [Backend]
-**Status**: [NOT STARTED]
-**Estimated**: 3 hours | **Actual**: - hours
+**Status**: [COMPLETE]
+**Estimated**: 3 hours | **Actual**: 1 hours
 **Story Points**: 5
 **Wireframe**: -
 
 **Deliverables**:
-- [ ] src/core/suite-runner.ts
+- [x] src/core/suite-runner.ts
 
 **Acceptance Criteria**:
-- [ ] [FR5.1] Parses and validates test suite JSON
-- [ ] [FR5.2] Executes tests sequentially (variable chaining order)
-- [ ] [FR5.3] Routes to api-runner or playwright-runner by type
-- [ ] [FR5.4] Manages shared variable store
-- [ ] [FR5.5] Emits per-test result events via callback
-- [ ] [FR5.6] Supports abort/cancel
-- [ ] [FR5.7] Returns summary: total, passed, failed, skipped, duration
+- [x] [FR5.1] Parses and validates test suite JSON
+- [x] [FR5.2] Executes tests sequentially (variable chaining order)
+- [x] [FR5.3] Routes to api-runner or playwright-runner by type
+- [x] [FR5.4] Manages shared variable store
+- [x] [FR5.5] Emits per-test result events via callback
+- [x] [FR5.6] Supports abort/cancel
+- [x] [FR5.7] Returns summary: total, passed, failed, skipped, duration
 
 ---
 
