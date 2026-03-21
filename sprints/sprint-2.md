@@ -78,16 +78,16 @@
 **Wireframe**: 01-main-screen.md
 
 **Deliverables**:
-- [ ] src/client/components/Toolbar/Toolbar.tsx
-- [ ] src/client/components/Toolbar/SaveLoadDialog.tsx
-- [ ] src/client/components/Toolbar/index.ts
+- [x] src/client/components/Toolbar/Toolbar.tsx
+- [x] src/client/components/Toolbar/SaveLoadDialog.tsx
+- [x] src/client/components/Toolbar/index.ts
 
 **Acceptance Criteria**:
-- [ ] [FR6.5] Run button triggers test execution
-- [ ] [FR6.6] Abort button stops running tests
-- [ ] [FR6.7] Save/Load dialog for test-suites/
-- [ ] [FR6.10] URL input field for target web page
-- [ ] Buttons disabled/enabled based on run state
+- [x] [FR6.5] Run button triggers test execution
+- [x] [FR6.6] Abort button stops running tests
+- [x] [FR6.7] Save/Load dialog for test-suites/
+- [x] [FR6.10] URL input field for target web page
+- [x] Buttons disabled/enabled based on run state
 
 ---
 
