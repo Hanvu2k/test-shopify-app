@@ -110,7 +110,7 @@
 | 3.2 | /api/run endpoint (SSE streaming) | 5 | [COMPLETE] | Backend | - |
 | 3.3 | /api/suites + /api/history endpoints | 3 | [COMPLETE] | Backend | - |
 | 3.4 | CLI mode | 3 | [COMPLETE] | Backend | - |
-| 3.5 | Frontend-backend integration | 5 | | Frontend | - |
+| 3.5 | Frontend-backend integration | 5 | [COMPLETE] | Frontend | - |
 | 3.6 | Code Review: Sprint 3 | 2 | | Reviewer | - |
 | 3.7 | QA: Test Sprint 3 tasks | 3 | | QA | - |
 
