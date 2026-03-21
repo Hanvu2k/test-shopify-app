@@ -106,9 +106,9 @@
 
 | ID | Task | Points | Status | Assignee | Wireframe |
 |----|------|--------|--------|----------|-----------|
-| 3.1 | Express server + SSE middleware | 3 | | Backend | - |
-| 3.2 | /api/run endpoint (SSE streaming) | 5 | | Backend | - |
-| 3.3 | /api/suites + /api/history endpoints | 3 | | Backend | - |
+| 3.1 | Express server + SSE middleware | 3 | [COMPLETE] | Backend | - |
+| 3.2 | /api/run endpoint (SSE streaming) | 5 | [COMPLETE] | Backend | - |
+| 3.3 | /api/suites + /api/history endpoints | 3 | [COMPLETE] | Backend | - |
 | 3.4 | CLI mode | 3 | [COMPLETE] | Backend | - |
 | 3.5 | Frontend-backend integration | 5 | | Frontend | - |
 | 3.6 | Code Review: Sprint 3 | 2 | | Reviewer | - |
