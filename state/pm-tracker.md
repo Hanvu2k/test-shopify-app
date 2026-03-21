@@ -3,8 +3,8 @@
 **Project ID**: wishlist-tester-2026-03
 **PM**: Project Manager
 **Started**: 2026-03-21
-**Current Sprint**: Sprint 0 (Planning)
-**Overall Progress**: 15%
+**Current Sprint**: Sprint 1 (Core Engine)
+**Overall Progress**: 20%
 
 ---
 
