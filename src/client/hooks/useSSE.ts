@@ -1,5 +1,5 @@
 import { useRef, useState, useCallback, useEffect } from 'react';
-import type { TestEvent } from '../../../core/types';
+import type { TestEvent } from '../../core/types';
 
 // ---------------------------------------------------------------------------
 // Constants

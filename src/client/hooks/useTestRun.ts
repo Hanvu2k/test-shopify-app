@@ -1,5 +1,5 @@
 import { useState, useCallback, useRef } from 'react';
-import type { TestResult, RunSummary, TestEvent } from '../../../core/types';
+import type { TestResult, RunSummary, TestEvent } from '../../core/types';
 import type { HistoryEntry } from '../components/History/HistoryPanel';
 import { useSSE } from './useSSE';
 

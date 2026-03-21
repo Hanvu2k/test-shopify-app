@@ -1,4 +1,4 @@
-import { RunSummary } from '../../../../core/types';
+import { RunSummary } from '../../../core/types';
 
 interface SummaryBarProps {
   summary: RunSummary;

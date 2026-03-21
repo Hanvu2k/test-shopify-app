@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import { TestResult, RunSummary } from '../../../../core/types';
+import { TestResult, RunSummary } from '../../../core/types';
 import { TestResultCard } from './TestResultCard';
 import { SummaryBar } from './SummaryBar';
 

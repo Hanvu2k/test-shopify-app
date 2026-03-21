@@ -1,5 +1,5 @@
 import { memo, useState } from 'react';
-import { TestResult, AssertionResult } from '../../../../core/types';
+import { TestResult, AssertionResult } from '../../../core/types';
 
 interface TestResultCardProps {
   result: TestResult;

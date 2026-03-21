@@ -3,3 +3,4 @@
 ## Project
 
 - [Sprint 1 code review findings](project_sprint1_findings.md) — Dead code duplication in api-runner/playwright-runner, singleton concurrency risk, null serialization bug. Verdict: NEEDS MINOR.
+- [Sprint 2 code review findings](project_sprint2_findings.md) — Module-scoped CodeMirror compartments, hardcoded aria-selected, dead ref, App.tsx not wired to real components. Verdict: NEEDS MINOR.

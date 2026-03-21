@@ -1,6 +1,6 @@
 import { memo, useState, useCallback, useRef, useEffect } from 'react';
 import { Clock, X, CheckCircle, XCircle, ChevronLeft, Search } from 'lucide-react';
-import type { TestResult } from '../../../../core/types';
+import type { TestResult } from '../../../core/types';
 
 // ---------------------------------------------------------------------------
 // Types
