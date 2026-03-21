@@ -205,19 +205,19 @@
 ---
 
 ### Task 2.7: QA: Test Sprint 2 tasks [QA]
-**Status**: [NOT STARTED]
-**Estimated**: 2 hours | **Actual**: - hours
+**Status**: [COMPLETE]
+**Estimated**: 2 hours | **Actual**: 2 hours
 **Story Points**: 3
 **Wireframe**: -
 
 **Deliverables**:
-- [ ] Component tests for frontend
-- [ ] Test report
+- [x] Component tests for frontend
+- [x] Test report
 
 **Acceptance Criteria**:
-- [ ] UI components render correctly
-- [ ] 80%+ coverage on new code
-- [ ] QA sign-off
+- [x] UI components render correctly
+- [x] 80%+ coverage on new code (actual: 96.31% statements, 93.82% branches, 100% functions)
+- [x] QA sign-off
 
 ---
 
