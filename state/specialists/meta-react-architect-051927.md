@@ -10,24 +10,31 @@ last_updated: 2026-03-21
 
 | Field | Value |
 |-------|-------|
-| Title | {TASK_TITLE} |
-| Sprint | Sprint {N} |
-| Scope | {SCOPE_DIRECTORY} |
+| Title | History Panel + URL Preview + Custom Hooks |
+| Sprint | Sprint 2 |
+| Scope | src/client/components/History/, src/client/components/Preview/, src/client/hooks/ |
 
 ## Current Progress
 
-**Status**: IN_PROGRESS
+**Status**: COMPLETE
 
-**Last completed**: [To be filled by agent]
+**Last completed**: All 7 deliverables created — HistoryPanel, UrlPreview, useSSE, useTestRun, and barrel index files.
 
-**Next steps**: [To be filled by agent]
+**Next steps**: None — task complete.
 
 ## Files Created/Modified
 
 | File | Action | Notes |
 |------|--------|-------|
-| (none yet) | - | - |
+| src/client/components/History/HistoryPanel.tsx | Created | Slide-in panel, date-grouped list, run detail view, filter |
+| src/client/components/History/index.ts | Created | Barrel export |
+| src/client/components/Preview/UrlPreview.tsx | Created | iframe preview with X-Frame-Options fallback, loading states |
+| src/client/components/Preview/index.ts | Created | Barrel export |
+| src/client/hooks/useSSE.ts | Created | POST-based SSE via fetch ReadableStream, auto-reconnect |
+| src/client/hooks/useTestRun.ts | Created | Full run lifecycle, result accumulation, history management |
+| src/client/hooks/index.ts | Created | Barrel export |
+| sprints/sprint-2.md | Modified | Task 2.5 marked [COMPLETE] |
 
 ## Blockers
 
-None currently.
+None.
