@@ -108,7 +108,7 @@
 
 | ID | Task | Points | Status | Assignee | Wireframe |
 |----|------|--------|--------|----------|-----------|
-| 1.1 | Project scaffolding + TypeScript types | 3 | | Backend | - |
+| 1.1 | Project scaffolding + TypeScript types | 3 | COMPLETE | Backend | - |
 | 1.2 | Variable interpolator | 3 | | Backend | - |
 | 1.3 | API runner | 5 | | Backend | - |
 | 1.4 | Playwright runner | 5 | | Backend | - |
