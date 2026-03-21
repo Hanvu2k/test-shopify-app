@@ -83,22 +83,22 @@
 ---
 
 ### Task 3.5: Frontend-Backend Integration [Frontend]
-**Status**: [NOT STARTED]
-**Estimated**: 3 hours | **Actual**: - hours
+**Status**: [COMPLETE]
+**Estimated**: 3 hours | **Actual**: 1.5 hours
 **Story Points**: 5
 **Wireframe**: -
 
 **Deliverables**:
-- [ ] src/client/hooks/useSSE.ts (updated: connect to real /api/run SSE)
-- [ ] src/client/hooks/useTestRun.ts (updated: real API calls)
-- [ ] src/client/services/api.ts (API client for suites, history, abort)
+- [x] src/client/hooks/useSSE.ts (updated: connect to real /api/run SSE)
+- [x] src/client/hooks/useTestRun.ts (updated: real API calls)
+- [x] src/client/services/api.ts (API client for suites, history, abort)
 
 **Acceptance Criteria**:
-- [ ] Run button → POST /api/run → SSE stream → results display
-- [ ] Abort button → POST /api/abort → stops running tests
-- [ ] Save → POST /api/suites/:name, Load → GET /api/suites/:name
-- [ ] History loads from GET /api/history
-- [ ] Error handling for network failures
+- [x] Run button → POST /api/run → SSE stream → results display
+- [x] Abort button → POST /api/abort → stops running tests
+- [x] Save → POST /api/suites/:name, Load → GET /api/suites/:name
+- [x] History loads from GET /api/history
+- [x] Error handling for network failures
 
 ---
 
