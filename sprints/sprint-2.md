@@ -184,6 +184,40 @@
 
 ## Notes
 
+### Task 2.6: Code Review: Sprint 2 [Reviewer]
+**Status**: [NOT STARTED]
+**Estimated**: 1 hour | **Actual**: - hours
+**Story Points**: 2
+**Wireframe**: -
+
+**Deliverables**:
+- [ ] Code review report for all Sprint 2 tasks
+
+**Acceptance Criteria**:
+- [ ] All code reviewed for quality, security, correctness
+- [ ] LGTM or issues reported
+
+---
+
+### Task 2.7: QA: Test Sprint 2 tasks [QA]
+**Status**: [NOT STARTED]
+**Estimated**: 2 hours | **Actual**: - hours
+**Story Points**: 3
+**Wireframe**: -
+
+**Deliverables**:
+- [ ] Component tests for frontend
+- [ ] Test report
+
+**Acceptance Criteria**:
+- [ ] UI components render correctly
+- [ ] 80%+ coverage on new code
+- [ ] QA sign-off
+
+---
+
+## Notes
+
 - All frontend code in src/client/ directory
 - Components connect to backend in Sprint 3
 - For Sprint 2, use mock data/callbacks to test UI components independently
