@@ -3,7 +3,7 @@
 **Project ID**: wishlist-tester-2026-03
 **Sprint**: 1 of 4
 **Status**: 🔵 In Progress
-**Last Updated**: 2026-03-21 04:49:59
+**Last Updated**: 2026-03-21 04:58:29
 
 ---
 
@@ -67,6 +67,7 @@ Story Points Remaining
 | Specialist | Current Task | Status |
 |------------|--------------|--------|
 | apple-ux-wireframer | Create wireframes for Wishlist Tester Web UI | 🟢 Available |
+| netflix-backend-architect | Project Scaffolding + TypeScript Types | 🟢 Available |
 
 ---
 

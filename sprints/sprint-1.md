@@ -31,18 +31,18 @@
 ---
 
 ### Task 1.2: Variable Interpolator [Backend]
-**Status**: [NOT STARTED]
-**Estimated**: 2 hours | **Actual**: - hours
+**Status**: [COMPLETE]
+**Estimated**: 2 hours | **Actual**: 1 hours
 **Story Points**: 3
 **Wireframe**: -
 
 **Deliverables**:
-- [ ] src/core/variable-interpolator.ts
+- [x] src/core/variable-interpolator.ts
 
 **Acceptance Criteria**:
-- [ ] [FR4.1] Replaces {{varName}} in all string fields
-- [ ] [FR4.4] Interpolation works on url, body, assertions, steps
-- [ ] [FR4.5] Throws clear error when variable not defined
+- [x] [FR4.1] Replaces {{varName}} in all string fields
+- [x] [FR4.4] Interpolation works on url, body, assertions, steps
+- [x] [FR4.5] Throws clear error when variable not defined
 
 ---
 
