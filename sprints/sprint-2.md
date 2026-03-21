@@ -119,8 +119,8 @@
 | 2.3 | Results panel component | 5 | | Frontend | 02-results-panel.md |
 | 2.4 | Toolbar (Run/Abort/Save/Load/URL) | 5 | | Frontend | 01-main-screen.md |
 | 2.5 | History panel + URL preview + hooks | 3 | | Frontend | 03-history-panel.md |
-| 2.R | Code Review: Sprint 2 | 2 | | Reviewer | - |
-| 2.Q | QA: Test Sprint 2 tasks | 3 | | QA | - |
+| 2.6 | Code Review: Sprint 2 | 2 | | Reviewer | - |
+| 2.7 | QA: Test Sprint 2 tasks | 3 | | QA | - |
 
 ---
 
