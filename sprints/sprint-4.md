@@ -138,6 +138,42 @@
 
 ## Notes
 
+### Task 4.4: Code Review: Sprint 4 [Reviewer]
+**Status**: [NOT STARTED]
+**Estimated**: 1 hour | **Actual**: - hours
+**Story Points**: 2
+**Wireframe**: -
+
+**Deliverables**:
+- [ ] Code review report for all Sprint 4 tasks
+
+**Acceptance Criteria**:
+- [ ] All code reviewed for quality, security, correctness
+- [ ] LGTM or issues reported
+
+---
+
+### Task 4.5: QA: Full regression + E2E tests [QA]
+**Status**: [NOT STARTED]
+**Estimated**: 3 hours | **Actual**: - hours
+**Story Points**: 5
+**Wireframe**: -
+
+**Deliverables**:
+- [ ] Full regression test suite
+- [ ] E2E test report
+- [ ] Final QA sign-off
+
+**Acceptance Criteria**:
+- [ ] All features from SRS verified
+- [ ] Edge cases tested (invalid JSON, network errors, timeouts)
+- [ ] CLI and Web UI both pass
+- [ ] QA final sign-off
+
+---
+
+## Notes
+
 - This sprint focuses on quality, not new features
 - QA task (4.Q) is the most important — full regression testing
 - All bugs found by QA should be fixed within this sprint
