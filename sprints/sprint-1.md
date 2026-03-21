@@ -60,7 +60,7 @@
 - [x] [FR2.2] Asserts status code matches expected
 - [x] [FR2.3] Asserts body contains expected string
 - [x] [FR2.4] Asserts JSON path matches expected value
-- [ ] [FR2.5] Extracts value from response body via JSON path (saveAs)
+- [x] [FR2.5] Extracts value from response body via JSON path (saveAs)
 - [x] Returns TestResult with pass/fail + assertion details
 
 ---
