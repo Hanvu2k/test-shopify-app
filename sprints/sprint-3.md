@@ -47,20 +47,20 @@
 ---
 
 ### Task 3.3: /api/suites + /api/history Endpoints [Backend]
-**Status**: [NOT STARTED]
-**Estimated**: 2 hours | **Actual**: - hours
+**Status**: [COMPLETE]
+**Estimated**: 2 hours | **Actual**: 1 hours
 **Story Points**: 3
 **Wireframe**: -
 
 **Deliverables**:
-- [ ] src/server/routes/suites.ts
-- [ ] src/server/routes/history.ts
+- [x] src/server/routes/suites.ts
+- [x] src/server/routes/history.ts
 
 **Acceptance Criteria**:
-- [ ] GET /api/suites lists JSON files in test-suites/
-- [ ] GET /api/suites/:name returns specific file content
-- [ ] POST /api/suites/:name saves JSON to file
-- [ ] GET /api/history returns recent run summaries
+- [x] GET /api/suites lists JSON files in test-suites/
+- [x] GET /api/suites/:name returns specific file content
+- [x] POST /api/suites/:name saves JSON to file
+- [x] GET /api/history returns recent run summaries
 
 ---
 
