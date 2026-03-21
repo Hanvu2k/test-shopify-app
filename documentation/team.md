@@ -1,104 +1,50 @@
-# Team Composition - [PROJECT_NAME]
+# Team Composition - Wishlist Tester
 
-**Project ID**: [PROJECT_ID]
-**Complexity**: [Simple / Standard / Complex / Enterprise]
-**Duration**: [X weeks/months]
-**Team Size**: [N] specialists
+**Project ID**: wishlist-tester-2026-03
+**Complexity**: Standard
+**Duration**: ~3 weeks
+**Team Size**: 6 specialists
 
 ---
 
 ## Core Roles (Not Spawned)
 
-These roles are handled by the main agent reading role instructions:
-
-| Role | Phase | File | Responsibility |
-|------|-------|------|----------------|
-| CEO | 1, 7 | `core/ceo.md` | Approval, sign-off |
-| CTO | 2a | `core/cto.md` | Tech stack, architecture |
-| HR | 2a | `core/hr.md` | Team composition |
-| BA | 1 | `core/ba.md` | Requirements gathering |
-| PM | All | `core/pm.md` | Sprint planning, coordination |
+| Role | Phase | Description |
+|------|-------|-------------|
+| BA | 1 | Requirements gathering (PM reads core/ba.md) |
+| CTO | 2a | Tech stack & architecture (PM reads core/cto.md) |
+| PM | All | Sprint planning, coordination, reporting |
+| CEO | Start/End | Approval, oversight, final sign-off |
 
 ---
 
 ## Specialists (Spawned)
 
-These are actual agents spawned for parallel execution:
-
-| Specialist | Role | Phases | Primary Skills |
-|------------|------|--------|----------------|
-| `apple-ux-wireframer` | UX Design | 2b | Wireframes, user flows |
-| `meta-react-architect` | Frontend | 3 | React, Next.js, TailwindCSS |
-| `netflix-backend-architect` | Backend | 3 | Node.js, Prisma, APIs |
-| `google-qa-engineer` | QA | 4 | Jest, Playwright, E2E |
-| `netflix-devops-engineer` | DevOps | 5-6 | Vercel, CI/CD, Docker |
+| Specialist | Role | Phases | Key Skills |
+|------------|------|--------|------------|
+| apple-ux-wireframer | UX Design | 2b | Wireframes, UI/UX (if client chooses) |
+| meta-react-architect | Frontend Dev | 3 | React 18, Vite, TailwindCSS, CodeMirror, TypeScript |
+| netflix-backend-architect | Backend Dev + Core Engine | 3 | Express, Node.js, TypeScript, SSE, Playwright integration |
+| google-code-reviewer | Code Review | 3 | Quality, security, performance review |
+| google-qa-engineer | QA | 4 | Playwright E2E, integration tests, QA sign-off |
+| netflix-devops-engineer | DevOps | 5-6 | CI/CD, packaging, deployment |
 
 ---
 
 ## SDLC Phase Coverage
 
-```
-PHASE COVERAGE VERIFICATION:
-├── Phase 1 (Requirements).... [Role/Specialist] [✅/❌]
-├── Phase 2a (Architecture)... [Role/Specialist] [✅/❌]
-├── Phase 2b (UX Design)...... [Role/Specialist] [✅/⏭️ SKIPPED/❌]
-├── Phase 3 (Development)..... [Specialists] [✅/❌]
-├── Phase 4 (Testing)......... [Specialist] [✅/❌]
-├── Phase 5 (Packaging)....... [Specialist] [✅/❌]
-├── Phase 6 (Deployment)...... [Specialist] [✅/❌]
-└── Phase 7 (Release)......... [Role] [✅/❌]
-
-STATUS: [✅ ALL CHECKS PASSED / ❌ MISSING COVERAGE]
-```
+| Phase | Coverage | Assigned |
+|-------|----------|----------|
+| 1. Requirements | ✅ | BA role |
+| 2a. Architecture | ✅ | CTO role |
+| 2b. UX Design | ✅ | apple-ux-wireframer |
+| 3. Development | ✅ | meta-react-architect + netflix-backend-architect |
+| 3. Code Review | ✅ | google-code-reviewer |
+| 4. Testing | ✅ | google-qa-engineer |
+| 5-6. Package/Deploy | ✅ | netflix-devops-engineer |
+| 7. Release | ✅ | PM + CEO |
 
 ---
 
-## Specialist Responsibilities
-
-### [specialist-name] (Role)
-
-**Responsibilities**:
-- [Responsibility 1]
-- [Responsibility 2]
-- [Responsibility 3]
-
-**Deliverables**:
-- `path/to/file1`
-- `path/to/file2`
-
----
-
-## Team Size Guidelines
-
-| Complexity | Team Size | Duration |
-|------------|-----------|----------|
-| Simple | 3-4 specialists | 1-2 weeks |
-| Standard | 5-6 specialists | 1-2 months |
-| Complex | 6-8 specialists | 2-4 months |
-| Enterprise | 8-12 specialists | 4-12 months |
-
----
-
-## Communication Matrix
-
-| From → To | Channel | Frequency |
-|-----------|---------|-----------|
-| PM → Specialists | Task assignments | Per sprint |
-| Specialists → PM | Progress updates | Daily |
-| PM → CEO | Milestone reports | Per sprint |
-| Frontend ↔ Backend | API contracts | As needed |
-| QA → All | Bug reports | As found |
-
----
-
-## Code Review
-
-After each task completion:
-- `google-code-reviewer` reviews code
-- Must get LGTM before task marked complete
-- Focus: TypeScript, security, performance
-
----
-
-**Created**: [DATE]
-**Last Updated**: [DATE]
+**Approved By**: HR
+**Date**: 2026-03-21
