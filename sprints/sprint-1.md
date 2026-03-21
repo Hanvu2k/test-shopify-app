@@ -11,20 +11,20 @@
 ## Task Details
 
 ### Task 1.1: Project Scaffolding + TypeScript Types [Backend]
-**Status**: [NOT STARTED]
-**Estimated**: 2 hours | **Actual**: - hours
+**Status**: [COMPLETE]
+**Estimated**: 2 hours | **Actual**: 1 hours
 **Story Points**: 3
 **Wireframe**: -
 
 **Deliverables**:
-- [ ] src/package.json (dependencies: playwright, express, cors, concurrently, codemirror, react, vite, tailwindcss, tsx)
-- [ ] src/tsconfig.json
-- [ ] src/core/types.ts (TestSuite, TestCase, Assertion, TestResult, StepAction, SaveAs, RunSummary interfaces)
+- [x] src/package.json (dependencies: playwright, express, cors, concurrently, codemirror, react, vite, tailwindcss, tsx)
+- [x] src/tsconfig.json
+- [x] src/core/types.ts (TestSuite, TestCase, Assertion, TestResult, StepAction, SaveAs, RunSummary interfaces)
 
 **Acceptance Criteria**:
-- [ ] [FR1.1] TestSuite interface has name, baseUrl, tests array
-- [ ] [FR1.2] TestCase interface has name, type, url, method, body, assertions, saveAs, steps
-- [ ] npm install succeeds with all dependencies
+- [x] [FR1.1] TestSuite interface has name, baseUrl, tests array
+- [x] [FR1.2] TestCase interface has name, type, url, method, body, assertions, saveAs, steps
+- [x] npm install succeeds with all dependencies
 
 **Notes**: This task sets up the entire project. All other tasks depend on types.ts.
 
