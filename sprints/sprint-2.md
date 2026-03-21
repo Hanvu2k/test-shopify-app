@@ -1,74 +1,126 @@
 # Sprint 2: Web UI Frontend
 
-**Project ID**: {PROJECT_ID}
-**Sprint**: 2 of {TOTAL}
-**Duration**: Week TBD-TBD ({START_DATE} to {END_DATE})
-**Goal**: {One-line sprint goal - what user can do after this sprint}
-**Status**: PLANNED | IN_PROGRESS | COMPLETE
+**Project ID**: wishlist-tester-2026-03
+**Sprint**: 2 of 4
+**Duration**: Week 2 (2026-03-28 to 2026-04-04)
+**Goal**: Full Web UI with JSON editor, results panel, toolbar, history — ready to connect to backend
+**Status**: PLANNED
 
 ---
 
 ## Task Details
 
-<!--
-DETAILED SECTIONS: Human-readable task breakdown
-Each task has deliverables, acceptance criteria, and time tracking
--->
-
-### Task 2.1: {Task Name} [{Assignee}]
-**Status**: [NOT STARTED] | [IN PROGRESS] | [COMPLETE]
-**Estimated**: TBD hours | **Actual**: - hours
-**Story Points**: {1-8}
-**Wireframe**: {filename.md | - }
-
-**Deliverables**:
-- [ ] {file path 1}
-- [ ] {file path 2}
-- [ ] {file path 3}
-
-**Acceptance Criteria**:
-- [ ] [FR-XXX] {Requirement from SRS}
-- [ ] [FR-YYY] {Another requirement}
-
-**Notes**: {Technical decisions, dependencies, blockers}
-
----
-
-### Task 2.2: {Task Name} [{Assignee}]
+### Task 2.1: React + Vite + TailwindCSS Setup [Frontend]
 **Status**: [NOT STARTED]
-**Estimated**: TBD hours | **Actual**: - hours
-**Story Points**: {1-8}
-**Wireframe**: {filename.md | - }
+**Estimated**: 2 hours | **Actual**: - hours
+**Story Points**: 2
+**Wireframe**: -
 
 **Deliverables**:
-- [ ] {file path 1}
+- [ ] src/client/index.html
+- [ ] src/client/main.tsx
+- [ ] src/client/App.tsx (main layout with split panels)
+- [ ] src/client/vite.config.ts
+- [ ] src/client/tailwind.config.ts
 
 **Acceptance Criteria**:
-- [ ] [FR-XXX] {Requirement}
+- [ ] Vite dev server runs on port 5273
+- [ ] TailwindCSS configured and working
+- [ ] Split panel layout renders (left editor, right results)
 
 ---
 
-<!-- Add more tasks as needed -->
+### Task 2.2: JSON Editor Component (CodeMirror 6) [Frontend]
+**Status**: [NOT STARTED]
+**Estimated**: 3 hours | **Actual**: - hours
+**Story Points**: 5
+**Wireframe**: 01-main-screen.md
+
+**Deliverables**:
+- [ ] src/client/components/Editor/JsonEditor.tsx
+- [ ] src/client/components/Editor/index.ts
+
+**Acceptance Criteria**:
+- [ ] [FR6.3] CodeMirror 6 with JSON syntax highlighting
+- [ ] JSON validation errors shown inline
+- [ ] Resizable panel width
+- [ ] Dark theme support
+
+---
+
+### Task 2.3: Results Panel Component [Frontend]
+**Status**: [NOT STARTED]
+**Estimated**: 3 hours | **Actual**: - hours
+**Story Points**: 5
+**Wireframe**: 02-results-panel.md
+
+**Deliverables**:
+- [ ] src/client/components/Results/ResultsPanel.tsx
+- [ ] src/client/components/Results/TestResultCard.tsx
+- [ ] src/client/components/Results/SummaryBar.tsx
+- [ ] src/client/components/Results/index.ts
+
+**Acceptance Criteria**:
+- [ ] [FR6.4] Displays test results in real-time stream
+- [ ] Each result shows: name, type badge (api/ui), status (pass/fail), duration
+- [ ] Expandable details: assertion results, expected vs actual
+- [ ] [FR6.9] Shows screenshot for UI test failures
+- [ ] Summary bar: total, passed, failed, duration
+
+---
+
+### Task 2.4: Toolbar Component (Run/Abort/Save/Load/URL) [Frontend]
+**Status**: [NOT STARTED]
+**Estimated**: 3 hours | **Actual**: - hours
+**Story Points**: 5
+**Wireframe**: 01-main-screen.md
+
+**Deliverables**:
+- [ ] src/client/components/Toolbar/Toolbar.tsx
+- [ ] src/client/components/Toolbar/SaveLoadDialog.tsx
+- [ ] src/client/components/Toolbar/index.ts
+
+**Acceptance Criteria**:
+- [ ] [FR6.5] Run button triggers test execution
+- [ ] [FR6.6] Abort button stops running tests
+- [ ] [FR6.7] Save/Load dialog for test-suites/
+- [ ] [FR6.10] URL input field for target web page
+- [ ] Buttons disabled/enabled based on run state
+
+---
+
+### Task 2.5: History Panel + URL Preview + Hooks [Frontend]
+**Status**: [NOT STARTED]
+**Estimated**: 2 hours | **Actual**: - hours
+**Story Points**: 3
+**Wireframe**: 03-history-panel.md
+
+**Deliverables**:
+- [ ] src/client/components/History/HistoryPanel.tsx
+- [ ] src/client/components/Preview/UrlPreview.tsx
+- [ ] src/client/hooks/useTestRun.ts
+- [ ] src/client/hooks/useSSE.ts
+
+**Acceptance Criteria**:
+- [ ] [FR6.8] History list shows past runs with date, suite name, pass/fail count
+- [ ] Click to view past run details
+- [ ] [FR6.10] URL preview iframe or link to target page
+- [ ] useSSE hook handles EventSource connection
+- [ ] useTestRun hook manages run state, results, abort
 
 ---
 
 ## Sprint Backlog (Machine-Parseable)
 
-<!--
-IMPORTANT: This table is parsed by scripts (generate-progress-dashboard.sh)
-- ID format: {sprint}.{task} (e.g., 1.1, 1.2)
-- Status: empty | [IN PROGRESS] | [COMPLETE] | [BLOCKED]
-- Points: 1-8 (story points)
-- Assignee: Frontend | Backend | QA | DevOps | UX
-- Wireframe: filename.md or -
-
-DO NOT change column order! Scripts depend on exact format.
--->
-
 | ID | Task | Points | Status | Assignee | Wireframe |
 |----|------|--------|--------|----------|-----------|
-| 2.1 | {Task name} | {pts} | | {Role} | {-.md} |
-| 2.2 | {Task name} | {pts} | | {Role} | {-.md} |
+| 2.1 | React + Vite + TailwindCSS setup | 2 | | Frontend | - |
+| 2.2 | JSON editor component (CodeMirror 6) | 5 | | Frontend | 01-main-screen.md |
+| 2.3 | Results panel component | 5 | | Frontend | 02-results-panel.md |
+| 2.4 | Toolbar (Run/Abort/Save/Load/URL) | 5 | | Frontend | 01-main-screen.md |
+| 2.5 | History panel + URL preview + hooks | 3 | | Frontend | 03-history-panel.md |
+| 2.R | Code Review: Sprint 2 | 2 | | Reviewer | - |
+| 2.Q | QA: Test Sprint 2 tasks | 3 | | QA | - |
 
 ---
 
@@ -76,55 +128,49 @@ DO NOT change column order! Scripts depend on exact format.
 
 | Metric | Value |
 |--------|-------|
-| Total Tasks | {count} |
-| Story Points | {total} |
-| Estimated Hours | {total_hours}h |
-| Actual Hours | {actual_hours}h |
-| Velocity | {percent}% |
+| Total Tasks | 7 |
+| Story Points | 25 |
+| Estimated Hours | 13h |
+| Actual Hours | -h |
+| Velocity | -% |
 
 | Role | Tasks | Points | Hours |
 |------|-------|--------|-------|
-| Frontend | {count} | {pts} | {hours}h |
-| Backend | {count} | {pts} | {hours}h |
-| QA | {count} | {pts} | {hours}h |
-| DevOps | {count} | {pts} | {hours}h |
+| Frontend | 5 | 20 | 13h |
+| Reviewer | 1 | 2 | -h |
+| QA | 1 | 3 | -h |
 
 ---
 
 ## Definition of Done
 
-<!--
-SPRINT-SPECIFIC DoD: What THIS sprint must achieve
-NOT generic checkboxes - actual testable outcomes
--->
-
 ### Functional Criteria
-- [ ] {Specific feature works: e.g., "User can view family tree with 50+ nodes"}
-- [ ] {Another feature: e.g., "Clicking node opens detail panel"}
-- [ ] {Another feature: e.g., "Zoom in/out works with mouse wheel"}
+- [ ] JSON editor has syntax highlighting and validation
+- [ ] Results panel renders test cards with pass/fail status
+- [ ] Toolbar buttons work (Run triggers callback, Abort triggers callback)
+- [ ] Save/Load dialog lists and manages test suite files
+- [ ] History panel shows past run list
 
 ### Technical Criteria
 - [ ] All tasks marked [COMPLETE] in Sprint Backlog
 - [ ] Code reviewed (LGTM from google-code-reviewer)
-- [ ] No TypeScript errors (`npm run build` passes)
-- [ ] No ESLint errors (`npm run lint` passes)
-- [ ] Unit tests written for new code
+- [ ] No TypeScript errors
+- [ ] Components are properly typed with React.FC
 
 ### Quality Criteria
-- [ ] {Sprint-specific quality: e.g., "Tree renders in <1 second"}
-- [ ] {Another quality: e.g., "No console errors in browser"}
+- [ ] UI looks clean, developer-tool aesthetic
+- [ ] Responsive split panel layout
+- [ ] No console errors
 
 ---
 
 ## Dependencies
 
-<!--
-NOTE: Use "Task X.Y" format (not bare "X.Y") to avoid false parsing by progress scripts
--->
-
 | Dependency | Reason | Status |
 |------------|--------|--------|
-| Task 2.X → {M}.Y | {Why dependency exists} | Resolved / Pending |
+| Sprint 1 complete | Core types needed for result interfaces | Pending |
+| Task 2.1 → all others | Vite/React setup needed first | Pending |
+| Wireframes ready | UX wireframes for component layout | Pending |
 
 ---
 
@@ -132,72 +178,32 @@ NOTE: Use "Task X.Y" format (not bare "X.Y") to avoid false parsing by progress 
 
 | # | Type | Description | Impact | Mitigation | Owner | Status |
 |---|------|-------------|--------|------------|-------|--------|
-| 1 | Risk | {Potential issue} | {H/M/L} | {Plan} | {Name} | Open |
-| - | - | None identified | - | - | - | - |
+| 1 | Risk | CodeMirror 6 bundle size may be large | L | Tree-shake, lazy load | Frontend | Open |
 
 ---
 
 ## Notes
 
-- {Important context for this sprint}
-- {Technical decisions made}
-- {Coordination needed between specialists}
+- All frontend code in src/client/ directory
+- Components connect to backend in Sprint 3
+- For Sprint 2, use mock data/callbacks to test UI components independently
+- Wireframes from Sprint 0 guide component layout
 
 ---
 
 ## Sprint Retrospective
 
-<!--
-Fill this out AFTER sprint completes
--->
-
 ### What Went Well
-- {Positive outcome 1}
-- {Positive outcome 2}
+- {TBD}
 
 ### What Needs Improvement
-- {Issue 1 and how to fix}
-- {Issue 2 and how to fix}
+- {TBD}
 
 ### Carry Over to Next Sprint
-- {Incomplete task or scope change}
+- {TBD}
 
 ### Time Analysis
 | Metric | Estimated | Actual | Variance |
 |--------|-----------|--------|----------|
-| Total Hours | TBDh | TBDh | {+/-Z}h |
-| Velocity | 100% | {actual}% | - |
-
----
-
-## Reference
-
-### Task ID Format
-**Format**: `{sprint}.{task}` (e.g., 1.1, 1.2, 2.1)
-
-### Status Values
-| Status | Task Details | Sprint Backlog Table |
-|--------|--------------|----------------------|
-| Not started | `[NOT STARTED]` | (empty) |
-| In progress | `[IN PROGRESS]` | `[IN PROGRESS]` |
-| Complete | `[COMPLETE]` | `[COMPLETE]` |
-| Blocked | `[BLOCKED]` | `[BLOCKED]` |
-| Deferred | - | `→ Sprint N` |
-
-### Assignee Values
-| Assignee | Specialist | Skills |
-|----------|------------|--------|
-| Frontend | meta-react-architect | React, Next.js, TailwindCSS |
-| Backend | netflix-backend-architect | Node.js, Prisma, APIs |
-| QA | google-qa-engineer | Jest, Playwright, E2E |
-| DevOps | netflix-devops-engineer | Vercel, CI/CD, Docker |
-| UX | apple-ux-wireframer | Wireframes, Figma |
-
-### Story Points Guide
-| Points | Complexity | Time Estimate |
-|--------|------------|---------------|
-| 1 | Trivial | < 1 hour |
-| 2 | Simple | 1-2 hours |
-| 3 | Medium | 2-4 hours |
-| 5 | Complex | 4-8 hours |
-| 8 | Very Complex | 8-16 hours |
+| Total Hours | 13h | TBDh | - |
+| Velocity | 100% | -% | - |
