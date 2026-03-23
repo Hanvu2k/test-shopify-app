@@ -31,19 +31,19 @@
 ---
 
 ### Task 6.2: Element Highlighting During Test [Frontend]
-**Status**: [NOT STARTED]
-**Estimated**: 3 hours | **Actual**: - hours
+**Status**: [COMPLETE]
+**Estimated**: 3 hours | **Actual**: 1 hours
 **Story Points**: 5
 **Wireframe**: -
 
 **Deliverables**:
-- [ ] src/client/components/ThemePreview/highlighter.ts (inject CSS highlight into iframe)
+- [x] src/client/components/ThemePreview/highlighter.ts (inject CSS highlight into iframe)
 
 **Acceptance Criteria**:
-- [ ] [FR10.6] During test run, active element highlighted with colored border/overlay
-- [ ] Highlight moves to next element as steps progress
-- [ ] Highlight removed when test completes
-- [ ] Works by injecting CSS into iframe via postMessage or contentWindow
+- [x] [FR10.6] During test run, active element highlighted with colored border/overlay
+- [x] Highlight moves to next element as steps progress
+- [x] Highlight removed when test completes
+- [x] Works by injecting CSS into iframe via postMessage or contentWindow
 
 **Notes**: Highlighting in iframe only works for same-origin or if Shopify allows it. May need fallback approach.
 
