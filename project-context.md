@@ -44,6 +44,19 @@
 - Tests execute sequentially (variable chaining dependency)
 - No self-testing — this IS the test tool
 
+## v2 Feature: Visual Flow Builder (Session 2 — 2026-03-23)
+
+**Q1**: Thay thế hay thêm mode? → **Thay thế** JSON editor hoàn toàn
+**Q2**: Nối block kiểu gì? → **Canvas kéo thả** (Node-RED/n8n style), linear only
+**Q3**: Selector helper? → Gõ tay CSS selector (click-to-detect làm sau)
+**Q4**: Preview layout? → **60% preview / 40% canvas**
+**Q5**: Preview highlight? → **Có**, highlight element đang tương tác
+**Q6**: Save format? → **JSON test suite format** (tương thích CLI), import JSON cũ → blocks
+**Q7**: Theme password? → Optional, nhập 1 lần ở settings (không phải lúc nào cũng cần)
+**Q8**: Block types? → Giữ nguyên: click, fill, waitFor, assertText, navigate, login, logout
+**Q9**: Branching/loop? → Không, chỉ linear
+**Q10**: Kết quả bên phải? → Giống panel Results hiện tại
+
 ## Sprint 0 Decisions
 - Wireframes = Yes
 - Tech Stack = APPROVED (React+Vite, Express, TailwindCSS, CodeMirror 6, Playwright, TypeScript)
