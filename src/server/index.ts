@@ -13,7 +13,7 @@ import cors from 'cors';
 import runRouter from './routes/run.js';
 import suitesRouter from './routes/suites.js';
 import historyRouter from './routes/history.js';
-// preview route removed — Playwright needs system deps not available on this server
+import previewRouter from './routes/preview.js';
 
 const PORT = 3737;
 
@@ -33,7 +33,7 @@ app.use(express.json({ limit: '1mb' }));
 app.use('/api', runRouter);           // POST /api/run, POST /api/abort
 app.use('/api/suites', suitesRouter); // GET/POST /api/suites, GET/POST /api/suites/:name
 app.use('/api/history', historyRouter); // GET /api/history
-// preview route removed — using "Open in New Tab" approach instead
+app.use('/api/preview', previewRouter); // POST /api/preview/start, GET /api/preview/screenshot, etc.
 
 // -----------------------------------------------------------------------------
 // Health check

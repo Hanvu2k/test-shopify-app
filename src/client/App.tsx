@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect, useMemo } from "react";
+import { useState, useCallback, useEffect, useMemo } from 'react';
 import {
   Play,
   Square,
@@ -8,29 +8,24 @@ import {
   ChevronDown,
   ChevronUp,
   Lock,
-} from "lucide-react";
-import type { Node, Edge } from "@xyflow/react";
+} from 'lucide-react';
+import type { Node, Edge } from '@xyflow/react';
 
-import {
-  FlowBuilder,
-  flowToJson,
-  jsonToFlow,
-  isFlowValid,
-} from "./components/FlowBuilder";
-import type { BlockNodeData } from "./components/FlowBuilder";
-import { ResultsPanel } from "./components/Results";
-import { HistoryPanel } from "./components/History";
-import type { HistoryEntry } from "./components/History";
-import { useTestRun } from "./hooks";
-import { fetchSuiteList, loadSuite, saveSuite } from "./services/api";
-import { ThemePreview } from "./components/ThemePreview";
-import type { TestSuite } from "../core/types";
+import { FlowBuilder, flowToJson, jsonToFlow, isFlowValid } from './components/FlowBuilder';
+import type { BlockNodeData } from './components/FlowBuilder';
+import { ResultsPanel } from './components/Results';
+import { HistoryPanel } from './components/History';
+import type { HistoryEntry } from './components/History';
+import { useTestRun } from './hooks';
+import { fetchSuiteList, loadSuite, saveSuite } from './services/api';
+import { ThemePreview } from './components/ThemePreview';
+import type { TestSuite } from '../core/types';
 
 // ---------------------------------------------------------------------------
 // Constants
 // ---------------------------------------------------------------------------
 
-const DEFAULT_SUITE_NAME = "Visual Flow Test";
+const DEFAULT_SUITE_NAME = 'Visual Flow Test';
 
 // ---------------------------------------------------------------------------
 // App
@@ -52,8 +47,8 @@ const DEFAULT_SUITE_NAME = "Visual Flow Test";
  */
 export function App() {
   // ---- Theme preview state ----
-  const [themeUrl, setThemeUrl] = useState("");
-  const [themePassword, setThemePassword] = useState("");
+  const [themeUrl, setThemeUrl] = useState('');
+  const [themePassword, setThemePassword] = useState('');
 
   // ---- Flow builder state ----
   const [flowNodes, setFlowNodes] = useState<Node<BlockNodeData>[]>([]);
@@ -78,9 +73,7 @@ export function App() {
   // ---- UI state ----
   const [isResultsOpen, setIsResultsOpen] = useState(false);
   const [isHistoryOpen, setIsHistoryOpen] = useState(false);
-  const [highlightSelector, setHighlightSelector] = useState<string | null>(
-    null,
-  );
+  const [highlightSelector, setHighlightSelector] = useState<string | null>(null);
   const [flowBuilderKey, setFlowBuilderKey] = useState(0);
   const [themePreviewKey, setThemePreviewKey] = useState(0);
 
@@ -162,7 +155,7 @@ export function App() {
       suiteName: DEFAULT_SUITE_NAME,
     });
 
-    const filename = prompt("Save suite as:", `${DEFAULT_SUITE_NAME}.json`);
+    const filename = prompt('Save suite as:', `${DEFAULT_SUITE_NAME}.json`);
     if (!filename) return;
 
     try {
@@ -170,21 +163,20 @@ export function App() {
       const updatedList = await fetchSuiteList();
       setSuiteFiles(updatedList);
     } catch (err) {
-      const message =
-        err instanceof Error ? err.message : "Failed to save suite";
-      console.error("[App] Save failed:", message);
+      const message = err instanceof Error ? err.message : 'Failed to save suite';
+      console.error('[App] Save failed:', message);
     }
   }, [flowNodes, flowEdges, themeUrl]);
 
   // ---- Load Suite: pick a file, parse JSON, convert to flow ----
   const handleLoadSuite = useCallback(async () => {
     if (suiteFiles.length === 0) {
-      console.warn("[App] No suite files available");
+      console.warn('[App] No suite files available');
       return;
     }
 
     const filename = prompt(
-      `Load suite (available: ${suiteFiles.join(", ")}):`,
+      `Load suite (available: ${suiteFiles.join(', ')}):`,
       suiteFiles[0],
     );
     if (!filename) return;
@@ -202,9 +194,8 @@ export function App() {
         setThemeUrl(suite.baseUrl);
       }
     } catch (err) {
-      const message =
-        err instanceof Error ? err.message : "Failed to load suite";
-      console.error("[App] Load failed:", message);
+      const message = err instanceof Error ? err.message : 'Failed to load suite';
+      console.error('[App] Load failed:', message);
     }
   }, [suiteFiles]);
 
@@ -231,13 +222,13 @@ export function App() {
   // ---- Status bar text ----
   const statusText = useMemo(() => {
     if (isRunning) {
-      return `Running... ${progress ? `${progress.current}/${progress.total}` : ""}`;
+      return `Running... ${progress ? `${progress.current}/${progress.total}` : ''}`;
     }
     if (error) return `Error: ${error}`;
     if (summary) {
       return `Done: ${summary.passed}/${summary.total} passed in ${(summary.duration / 1000).toFixed(1)}s`;
     }
-    return "Ready";
+    return 'Ready';
   }, [isRunning, progress, error, summary]);
 
   const hasResults = results.length > 0 || isRunning || summary !== null;
@@ -356,7 +347,7 @@ export function App() {
         {/* Left panel: Theme Preview */}
         <section
           className="flex flex-col overflow-hidden"
-          style={{ width: "60%" }}
+          style={{ width: '60%' }}
           aria-label="Theme Preview"
         >
           <div className="panel-header">
@@ -400,7 +391,7 @@ export function App() {
       {hasResults && (
         <section
           className={`flex-none border-t border-border bg-surface transition-all duration-200 ${
-            isResultsOpen ? "h-[280px]" : "h-8"
+            isResultsOpen ? 'h-[280px]' : 'h-8'
           }`}
           aria-label="Test Results"
         >
@@ -409,9 +400,7 @@ export function App() {
             type="button"
             onClick={toggleResults}
             className="w-full flex items-center justify-between px-3 py-1 bg-surface-raised border-b border-border text-xs text-text-secondary hover:text-text-primary transition-colors h-8"
-            aria-label={
-              isResultsOpen ? "Collapse results panel" : "Expand results panel"
-            }
+            aria-label={isResultsOpen ? 'Collapse results panel' : 'Expand results panel'}
           >
             <span className="font-medium">
               Results
@@ -426,19 +415,12 @@ export function App() {
                 </span>
               )}
             </span>
-            {isResultsOpen ? (
-              <ChevronDown size={14} />
-            ) : (
-              <ChevronUp size={14} />
-            )}
+            {isResultsOpen ? <ChevronDown size={14} /> : <ChevronUp size={14} />}
           </button>
 
           {/* Results content */}
           {isResultsOpen && (
-            <div
-              className="overflow-hidden"
-              style={{ height: "calc(100% - 32px)" }}
-            >
+            <div className="overflow-hidden" style={{ height: 'calc(100% - 32px)' }}>
               <ResultsPanel
                 results={results}
                 summary={summary}
