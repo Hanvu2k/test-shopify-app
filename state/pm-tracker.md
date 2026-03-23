@@ -3,8 +3,8 @@
 **Project ID**: wishlist-tester-2026-03
 **PM**: Project Manager
 **Started**: 2026-03-21
-**Current Sprint**: Sprint 3 (Backend + CLI + Integration)
-**Overall Progress**: 60%
+**Current Sprint**: Sprint 4 (QA + Polish + Deployment)
+**Overall Progress**: 80%
 
 ---
 
