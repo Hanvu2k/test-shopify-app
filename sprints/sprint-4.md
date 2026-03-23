@@ -154,21 +154,21 @@
 ---
 
 ### Task 4.5: QA: Full regression + E2E tests [QA]
-**Status**: [NOT STARTED]
-**Estimated**: 3 hours | **Actual**: - hours
+**Status**: [COMPLETE]
+**Estimated**: 3 hours | **Actual**: 1.5 hours
 **Story Points**: 5
 **Wireframe**: -
 
 **Deliverables**:
-- [ ] Full regression test suite
-- [ ] E2E test report
-- [ ] Final QA sign-off
+- [x] Full regression test suite
+- [x] E2E test report
+- [x] Final QA sign-off
 
 **Acceptance Criteria**:
-- [ ] All features from SRS verified
-- [ ] Edge cases tested (invalid JSON, network errors, timeouts)
-- [ ] CLI and Web UI both pass
-- [ ] QA final sign-off
+- [x] All features from SRS verified
+- [x] Edge cases tested (invalid JSON, network errors, timeouts)
+- [x] CLI and Web UI both pass
+- [x] QA final sign-off
 
 ---
 
