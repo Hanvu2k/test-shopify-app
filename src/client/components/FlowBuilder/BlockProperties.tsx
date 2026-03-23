@@ -22,7 +22,7 @@ import { BlockNodeData, BlockType } from './types';
 // Icon map — keyed by the icon name stored in BlockTypeDefinition
 // ---------------------------------------------------------------------------
 
-const ICON_MAP: Record<string, React.ComponentType<{ size?: number; className?: string }>> = {
+const ICON_MAP: Record<string, typeof MousePointerClick> = {
   MousePointerClick,
   TextCursorInput,
   Clock,
@@ -104,7 +104,7 @@ export const BlockProperties: React.FC<BlockPropertiesProps> = ({
 interface PanelProps {
   nodeData: BlockNodeData;
   definition: ReturnType<typeof BLOCK_TYPE_MAP.get> & {};
-  Icon: React.ComponentType<{ size?: number; className?: string }> | undefined;
+  Icon: typeof MousePointerClick | undefined;
   onUpdate: (data: Partial<BlockNodeData>) => void;
   onClose: () => void;
 }
