@@ -73,7 +73,7 @@
 |----|------|--------|--------|----------|-----------|
 | 4.1 | Example test suites + npm scripts | 2 | | Backend | - |
 | 4.2 | Error handling + edge cases polish | 3 | | Backend | - |
-| 4.3 | CI/CD + packaging | 3 | | DevOps | - |
+| 4.3 | CI/CD + packaging | 3 | [COMPLETE] | DevOps | - |
 | 4.4 | Code Review: Sprint 4 | 2 | | Reviewer | - |
 | 4.5 | QA: Full regression + E2E tests | 5 | | QA | - |
 
