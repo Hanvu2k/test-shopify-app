@@ -105,7 +105,7 @@
 | ID | Task | Points | Status | Assignee | Wireframe |
 |----|------|--------|--------|----------|-----------|
 | 5.1 | Install React Flow + block type definitions | 3 | [COMPLETE] | Frontend | - |
-| 5.2 | Flow canvas component (React Flow) | 8 | | Frontend | - |
+| 5.2 | Flow canvas component (React Flow) | 8 | [COMPLETE] | Frontend | - |
 | 5.3 | Block palette (sidebar) | 3 | [COMPLETE] | Frontend | - |
 | 5.4 | Block properties panel | 5 | [COMPLETE] | Frontend | - |
 | 5.5 | Flow ↔ JSON converter | 5 | [COMPLETE] | Frontend | - |
