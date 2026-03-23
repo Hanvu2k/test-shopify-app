@@ -75,7 +75,7 @@
 | 4.2 | Error handling + edge cases polish | 3 | [COMPLETE] | Backend | - |
 | 4.3 | CI/CD + packaging | 3 | [COMPLETE] | DevOps | - |
 | 4.4 | Code Review: Sprint 4 | 2 | [COMPLETE] | Reviewer | - |
-| 4.5 | QA: Full regression + E2E tests | 5 | | QA | - |
+| 4.5 | QA: Full regression + E2E tests | 5 | [COMPLETE] | QA | - |
 
 ---
 
