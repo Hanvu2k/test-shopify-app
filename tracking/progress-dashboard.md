@@ -3,7 +3,7 @@
 **Project ID**: wishlist-tester-2026-03
 **Sprint**: 6 of 6
 **Status**: 🟡 At Risk
-**Last Updated**: 2026-03-23 03:06:43
+**Last Updated**: 2026-03-23 03:08:47
 
 ---
 
@@ -29,9 +29,9 @@ Phase 4: Deployment    [░░░░░░░░░░]   0% 🔵
 | Sprint 3 | Full working app — Web UI connected to backend with SSE streaming, CLI mode operational | 7/7 | ✅ Complete |
 | Sprint 4 | Production-ready tool — fully tested, polished, packaged for distribution | 5/5 | ✅ Complete |
 | Sprint 5 | React Flow canvas with draggable blocks, block configuration, block palette — visual test builder working standalone | 7/7 | ✅ Complete |
-| Sprint 6 | Full integrated app — theme preview with highlight, App.tsx rewired, everything tested | 2/6 | 🟡 In Progress (2/6) |
+| Sprint 6 | Full integrated app — theme preview with highlight, App.tsx rewired, everything tested | 3/6 | 🟡 In Progress (3/6) |
 
-**Velocity**: 71% average
+**Velocity**: 74% average
 
 ---
 
@@ -44,9 +44,9 @@ Phase 4: Deployment    [░░░░░░░░░░]   0% 🔵
 | Sprint 3 | 7 | 7 | 100% |
 | Sprint 4 | 5 | 5 | 100% |
 | Sprint 5 | 7 | 7 | 100% |
-| Sprint 6 | 2 | 6 | 33% |
+| Sprint 6 | 3 | 6 | 50% |
 
-**Total**: 28/39 tasks (71%)
+**Total**: 29/39 tasks (74%)
 
 ---
 
@@ -60,11 +60,11 @@ Story Points Remaining
  95 |●●●●●●●●● (S3)
  80 |●●●●●●●● (S4)
  51 |●●●●● (S5)
- 41 |●●●● (S6)
+ 36 |●●● (S6)
   0 |_______________
 ```
 
-**Total**: 144 | **Completed**: 103 | **Remaining**: 41
+**Total**: 144 | **Completed**: 108 | **Remaining**: 36
 
 ---
 
@@ -91,7 +91,7 @@ Story Points Remaining
 | Sprint 3 | ✅ Complete |
 | Sprint 4 | ✅ Complete |
 | Sprint 5 | ✅ Complete |
-| Sprint 6 | 🟡 2/6 |
+| Sprint 6 | 🟡 3/6 |
 | Testing | 🟡 50% |
 | Deployment | 🔵 0% |
 
@@ -106,7 +106,7 @@ Story Points Remaining
 - ✅ Sprint 5: React Flow canvas with draggable blocks, block configuration, block palette — visual test builder working standalone
 
 ### In Progress
-- 🟡 Sprint 6: Full integrated app — theme preview with highlight, App.tsx rewired, everything tested (2/6 done)
+- 🟡 Sprint 6: Full integrated app — theme preview with highlight, App.tsx rewired, everything tested (3/6 done)
 
 ### Next Up
 - 🔵 Sprint 1: Core test execution engine works — can run API + UI tests with variable chaining via code/tests
