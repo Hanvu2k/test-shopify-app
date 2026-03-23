@@ -35,6 +35,8 @@ export default defineConfig({
         'server/routes/suites.ts',
         'server/routes/history.ts',
         'client/services/api.ts',
+        'client/components/FlowBuilder/flowConverter.ts',
+        'client/components/FlowBuilder/constants.ts',
       ],
       exclude: [
         'core/__tests__/**',
