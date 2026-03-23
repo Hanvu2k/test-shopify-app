@@ -95,7 +95,7 @@
 | 6.3 | App.tsx rewrite — new layout | 5 | [COMPLETE] | Frontend | - |
 | 6.4 | Polish + edge cases | 3 | | Frontend | - |
 | 6.5 | Code Review: Sprint 6 | 2 | [COMPLETE] | Reviewer | - |
-| 6.6 | QA: Full regression + E2E | 5 | | QA | - |
+| 6.6 | QA: Full regression + E2E | 5 | [COMPLETE] | QA | - |
 
 ---
 
