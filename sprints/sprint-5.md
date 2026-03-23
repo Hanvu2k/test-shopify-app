@@ -83,20 +83,20 @@
 ---
 
 ### Task 5.5: Flow ↔ JSON Converter [Frontend]
-**Status**: [NOT STARTED]
-**Estimated**: 3 hours | **Actual**: - hours
+**Status**: [COMPLETE]
+**Estimated**: 3 hours | **Actual**: 1 hour
 **Story Points**: 5
 **Wireframe**: -
 
 **Deliverables**:
-- [ ] src/client/components/FlowBuilder/flowConverter.ts
+- [x] src/client/components/FlowBuilder/flowConverter.ts
 
 **Acceptance Criteria**:
-- [ ] [FR9.7] flowToJson(): Convert React Flow nodes+edges → TestSuite JSON
-- [ ] [FR9.8] jsonToFlow(): Convert TestSuite JSON → React Flow nodes+edges (import)
-- [ ] [FR9.9] Output matches existing TestSuite format (compatible with CLI, suite-runner)
-- [ ] Handles all 7 block types correctly
-- [ ] Preserves block order from edge connections
+- [x] [FR9.7] flowToJson(): Convert React Flow nodes+edges → TestSuite JSON
+- [x] [FR9.8] jsonToFlow(): Convert TestSuite JSON → React Flow nodes+edges (import)
+- [x] [FR9.9] Output matches existing TestSuite format (compatible with CLI, suite-runner)
+- [x] Handles all 7 block types correctly
+- [x] Preserves block order from edge connections
 
 ---
 
