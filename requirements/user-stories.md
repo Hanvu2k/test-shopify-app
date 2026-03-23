@@ -236,6 +236,129 @@ Scenario: CLI error details
 
 ---
 
+## Epic 5: Visual Flow Builder (v2)
+
+### US-012: Drag & Drop Block Canvas
+**As a** developer
+**I want to** drag test blocks onto a canvas and connect them visually
+**So that** I can build UI test flows without writing JSON manually
+
+**Acceptance Criteria**:
+```gherkin
+Scenario: Create a flow with blocks
+  Given the Visual Flow Builder is open
+  When I drag a "click" block from the palette onto the canvas
+  And I drag a "assertText" block and connect it after the click block
+  Then both blocks appear on canvas connected by a line
+  And I can set selector and parameters on each block
+
+Scenario: Delete and rearrange
+  Given a flow with 3 connected blocks
+  When I select and delete the middle block
+  Then the connection updates to link block 1 → block 3
+```
+**Story Points**: 8
+**Priority**: MUST
+
+### US-013: Block Configuration
+**As a** developer
+**I want to** configure each block with selector, label, and action-specific fields
+**So that** each step has the correct target element and parameters
+
+**Acceptance Criteria**:
+```gherkin
+Scenario: Configure a click block
+  Given a click block on the canvas
+  When I click on it to select it
+  Then a properties panel shows: label, CSS selector
+  And I can edit both fields
+
+Scenario: Configure a fill block
+  Given a fill block on the canvas
+  When I select it
+  Then properties panel shows: label, CSS selector, value to fill
+
+Scenario: Configure a login block
+  Given a login block on the canvas
+  When I select it
+  Then properties panel shows: label, email, password
+```
+**Story Points**: 5
+**Priority**: MUST
+
+### US-014: Flow ↔ JSON Conversion
+**As a** developer
+**I want to** convert flows to JSON and import JSON as flows
+**So that** flows are compatible with CLI mode and existing test suites
+
+**Acceptance Criteria**:
+```gherkin
+Scenario: Run converts flow to JSON
+  Given a flow with 3 connected blocks
+  When I click Run
+  Then the flow is converted to standard TestSuite JSON
+  And the test executes via suite-runner
+
+Scenario: Import existing JSON
+  Given I load a saved test suite JSON file
+  Then blocks appear on canvas matching each test step
+  And connections are created in order
+
+Scenario: Save flow as JSON
+  Given a flow on canvas
+  When I click Save
+  Then it saves as standard JSON test suite format (compatible with CLI)
+```
+**Story Points**: 5
+**Priority**: MUST
+
+### US-015: Shopify Theme Preview with Password
+**As a** developer
+**I want to** preview the Shopify theme in the left panel with optional password
+**So that** I can see the page I'm testing while building the flow
+
+**Acceptance Criteria**:
+```gherkin
+Scenario: Load theme preview
+  Given I enter a Shopify theme preview URL
+  When the page loads
+  Then the theme preview displays in the left panel (60% width)
+
+Scenario: Theme with password
+  Given a Shopify theme requires a password
+  When I enter the password in settings
+  Then the preview loads after authentication
+
+Scenario: Element highlighting during test
+  Given a test is running
+  When a step interacts with an element
+  Then that element is highlighted in the preview panel
+```
+**Story Points**: 5
+**Priority**: MUST
+
+### US-016: Block Palette
+**As a** developer
+**I want to** choose from available block types in a sidebar palette
+**So that** I can quickly add the right action type to my flow
+
+**Acceptance Criteria**:
+```gherkin
+Scenario: View available blocks
+  Given the Flow Builder is open
+  Then I see a palette with block types: click, fill, waitFor, assertText, navigate, login, logout
+  And each has an icon and label
+
+Scenario: Drag block to canvas
+  Given the palette is visible
+  When I drag a block type onto the canvas
+  Then a new block instance is created at the drop position
+```
+**Story Points**: 3
+**Priority**: MUST
+
+---
+
 ## Story Map Summary
 
 | Priority | Stories | Total Points |
