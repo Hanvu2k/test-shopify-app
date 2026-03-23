@@ -13,11 +13,13 @@
     "test:coverage": "vitest run --coverage"
   },
   "dependencies": {
+    "@types/ws": "^8.18.1",
     "@xyflow/react": "^12.10.1",
     "cors": "^2.8.5",
     "express": "^4.21.0",
     "jsonpath-plus": "^10.2.0",
-    "playwright": "^1.49.0"
+    "playwright": "^1.49.0",
+    "ws": "^8.20.0"
   },
   "devDependencies": {
     "@codemirror/lang-json": "^6.0.1",
