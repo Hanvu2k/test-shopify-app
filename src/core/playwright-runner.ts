@@ -203,9 +203,10 @@ function buildScreenshotPath(testName: string, dir: string): string {
 
 export interface RunUiTestOptions {
   screenshotDir?: string;
-  /** When provided, tests run inside this context instead of launching a new browser.
-   *  The caller manages the context lifecycle — the runner will not close it. */
+  /** When provided, tests run inside this context instead of launching a new browser. */
   browserContext?: BrowserContext;
+  /** When provided, tests run directly on this page (shares cookies/session). */
+  existingPage?: Page;
 }
 
 /** Combined result containing both the TestResult and a getText callback for saveAs extraction. */
@@ -231,20 +232,27 @@ export async function runUiTestWithPage(
   const stepTimeoutMs = testCase.stepTimeout ?? DEFAULT_TIMEOUT_MS;
   const assertions: AssertionResult[] = [];
   const externalContext = options?.browserContext ?? null;
+  const existingPage = options?.existingPage ?? null;
 
-  // Only launch the standalone browser when no external context is provided (CLI mode)
-  if (!externalContext) {
+  // Only launch the standalone browser when no external context/page is provided (CLI mode)
+  if (!externalContext && !existingPage) {
     await launchBrowser();
   }
 
   let context: BrowserContext | null = null;
   let page: Page | null = null;
-  const ownsContext = !externalContext;
+  const ownsContext = !externalContext && !existingPage;
 
   try {
-    context = externalContext ?? await browserInstance!.newContext();
-    context.setDefaultTimeout(stepTimeoutMs);
-    page = await context.newPage();
+    if (existingPage) {
+      // Reuse the preview page directly — shares cookies, session, and shows in preview
+      page = existingPage;
+      context = null; // we don't own any context
+    } else {
+      context = externalContext ?? await browserInstance!.newContext();
+      context.setDefaultTimeout(stepTimeoutMs);
+      page = await context.newPage();
+    }
 
     page.on('pageerror', () => {});
 
@@ -280,7 +288,7 @@ export async function runUiTestWithPage(
                 screenshot: screenshotPath,
               };
               // Close context on failure — only if we own it
-              if (ownsContext) await context.close().catch(() => {});
+              if (ownsContext && context) await context.close().catch(() => {});
               return { result, getText: null, cleanup: async () => {} };
             }
             break;
@@ -306,7 +314,7 @@ export async function runUiTestWithPage(
           error: `Step "${step.action}" failed: ${errorMessage}`,
           screenshot: screenshotPath,
         };
-        if (ownsContext) await context.close().catch(() => {});
+        if (ownsContext && context) await context.close().catch(() => {});
         return { result, getText: null, cleanup: async () => {} };
       }
     }
@@ -322,7 +330,7 @@ export async function runUiTestWithPage(
       return text.trim();
     };
     const cleanup = async () => {
-      if (shouldCloseContext) {
+      if (shouldCloseContext && boundContext) {
         await boundContext.close().catch(() => {});
       }
     };

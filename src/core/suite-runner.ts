@@ -6,7 +6,7 @@
 // support, and per-test event streaming.
 // =============================================================================
 
-import type { BrowserContext } from 'playwright';
+import type { BrowserContext, Page } from 'playwright';
 import type {
   TestSuite,
   TestCase,
@@ -82,9 +82,10 @@ function validateSuite(suite: unknown): string | null {
 export interface SuiteRunnerOptions {
   /** AbortSignal to cancel the suite mid-execution. */
   abortSignal?: AbortSignal;
-  /** When provided, UI tests run inside this browser context instead of launching a new browser.
-   *  Used by the web server to share the preview browser with the test runner. */
+  /** When provided, UI tests run inside this browser context instead of launching a new browser. */
   browserContext?: BrowserContext;
+  /** When provided, UI tests run directly on this page (shares cookies/session with preview). */
+  existingPage?: Page;
 }
 
 // -----------------------------------------------------------------------------
@@ -154,7 +155,7 @@ export async function runSuite(
         result = await executeApiTest(interpolated, variables);
       } else {
         usedPlaywright = true;
-        result = await executeUiTest(interpolated, variables, options?.browserContext);
+        result = await executeUiTest(interpolated, variables, options?.browserContext, options?.existingPage);
       }
     } catch (unexpectedError) {
       // Catch-all: never let one test crash the entire suite
@@ -185,7 +186,7 @@ export async function runSuite(
 
   // ---- Cleanup ----
   // Only close the standalone browser when we launched it (no external context)
-  if (usedPlaywright && !options?.browserContext) {
+  if (usedPlaywright && !options?.browserContext && !options?.existingPage) {
     await closeBrowser();
   }
 
@@ -237,8 +238,12 @@ async function executeUiTest(
   testCase: UiTestCase,
   variables: Map<string, unknown>,
   browserContext?: BrowserContext,
+  existingPage?: Page,
 ): Promise<TestResult> {
-  const { result, getText, cleanup } = await runUiTestWithPage(testCase, { browserContext });
+  const { result, getText, cleanup } = await runUiTestWithPage(testCase, {
+    browserContext,
+    existingPage,
+  });
 
   // Extract and save variables from page DOM when test passes
   if (testCase.saveAs && getText) {
@@ -255,8 +260,10 @@ async function executeUiTest(
     }
   }
 
-  // Always cleanup the browser context
-  await cleanup();
+  // Only cleanup if we own the context (not when using existingPage)
+  if (!existingPage) {
+    await cleanup();
+  }
 
   return result;
 }

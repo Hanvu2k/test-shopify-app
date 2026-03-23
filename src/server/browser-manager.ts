@@ -89,12 +89,16 @@ export async function takePreviewScreenshot(quality: number): Promise<Buffer | n
 }
 
 /**
- * Creates a new browser context for test execution within the shared browser.
- * The caller is responsible for closing this context when done.
+ * Returns the preview page for test execution.
+ * Tests run directly on the preview page so they share cookies/session
+ * and actions are visible in the preview screenshots.
+ * Returns null if no preview session is active.
  */
-export async function createTestContext(): Promise<BrowserContext> {
-  const b = await getBrowser();
-  return b.newContext();
+export async function getTestPage(): Promise<Page | null> {
+  if (previewPage && !previewPage.isClosed()) {
+    return previewPage;
+  }
+  return null;
 }
 
 /**
