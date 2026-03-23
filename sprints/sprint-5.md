@@ -189,19 +189,20 @@
 ---
 
 ### Task 5.7: QA: Test Sprint 5 tasks [QA]
-**Status**: [NOT STARTED]
-**Estimated**: 2 hours | **Actual**: - hours
+**Status**: [COMPLETE]
+**Estimated**: 2 hours | **Actual**: 1 hour
 **Story Points**: 3
 **Wireframe**: -
 
 **Deliverables**:
-- [ ] Tests for flowConverter (unit tests)
-- [ ] Test report
+- [x] Tests for flowConverter (unit tests) — 43 tests in client/__tests__/flowConverter.test.ts
+- [x] Tests for constants — 32 tests in client/__tests__/flowBuilderConstants.test.ts
+- [x] Test report — 395 tests total, all passing
 
 **Acceptance Criteria**:
-- [ ] flowConverter correctly converts flow ↔ JSON
-- [ ] All block types handled
-- [ ] QA sign-off
+- [x] flowConverter correctly converts flow ↔ JSON
+- [x] All block types handled (7/7: click, fill, waitFor, assertText, navigate, login, logout)
+- [x] QA sign-off — flowConverter.ts: 95.4% coverage, constants.ts: 100% coverage
 
 ---
 
