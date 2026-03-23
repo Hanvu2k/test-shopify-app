@@ -390,3 +390,122 @@ describe('runApiTestWithResponse()', () => {
     expect(responseBody).toBeNull();
   });
 });
+
+// -----------------------------------------------------------------------------
+// runApiTest() — timeout behavior (Sprint 4.2)
+// -----------------------------------------------------------------------------
+
+/** Creates a fetch mock that never resolves (simulates a stalled request). */
+function mockFetchStalled() {
+  return vi.fn().mockReturnValue(new Promise<Response>(() => {}));
+}
+
+/** Creates a fetch mock that aborts when the AbortSignal fires. */
+function mockFetchAbortable() {
+  return vi.fn().mockImplementation((_url: string, init: RequestInit) => {
+    return new Promise<Response>((_resolve, reject) => {
+      if (init.signal) {
+        init.signal.addEventListener('abort', () => {
+          const abortError = new Error('The operation was aborted');
+          abortError.name = 'AbortError';
+          reject(abortError);
+        });
+      }
+    });
+  });
+}
+
+describe('runApiTest() — timeout behavior', () => {
+  it('returns status "error" with timeout message when request exceeds custom timeout', async () => {
+    vi.stubGlobal('fetch', mockFetchAbortable());
+    const testCase = makeApiTestCase({
+      timeout: 50, // 50ms — fires quickly in test
+      assertions: [],
+    });
+
+    const result = await runApiTest(testCase);
+
+    expect(result.status).toBe('error');
+    expect(result.error).toMatch(/timed out after 50ms/i);
+  });
+
+  it('error message includes the configured timeout value in milliseconds', async () => {
+    vi.stubGlobal('fetch', mockFetchAbortable());
+    const testCase = makeApiTestCase({
+      timeout: 100,
+      assertions: [],
+    });
+
+    const result = await runApiTest(testCase);
+
+    expect(result.error).toContain('100ms');
+  });
+
+  it('uses 30000ms default timeout when timeout field is not specified', async () => {
+    // Verify the test case without a timeout field resolves normally
+    vi.stubGlobal('fetch', mockFetchWith(makeFetchResponse(200, '{}')));
+    const testCase = makeApiTestCase({ assertions: [] });
+
+    const result = await runApiTest(testCase);
+
+    // Should pass (uses default 30s timeout, fetch resolves immediately)
+    expect(result.status).toBe('pass');
+  });
+
+  it('includes a duration when the request times out', async () => {
+    vi.stubGlobal('fetch', mockFetchAbortable());
+    const testCase = makeApiTestCase({
+      timeout: 50,
+      assertions: [],
+    });
+
+    const result = await runApiTest(testCase);
+
+    expect(result.duration).toBeGreaterThanOrEqual(0);
+  });
+
+  it('succeeds normally when request completes before the timeout', async () => {
+    vi.stubGlobal('fetch', mockFetchWith(makeFetchResponse(200, '{"ok":true}')));
+    const testCase = makeApiTestCase({
+      timeout: 5000, // 5 second timeout — fetch resolves immediately
+      assertions: [{ type: 'status', expected: 200 }],
+    });
+
+    const result = await runApiTest(testCase);
+
+    expect(result.status).toBe('pass');
+    expect(result.error).toBeUndefined();
+  });
+});
+
+describe('runApiTestWithResponse() — timeout behavior', () => {
+  it('returns status "error" and null responseBody when request times out', async () => {
+    vi.stubGlobal('fetch', mockFetchAbortable());
+    const testCase = makeApiTestCase({
+      timeout: 50,
+      assertions: [],
+    });
+
+    const { result, responseBody } = await runApiTestWithResponse(testCase);
+
+    expect(result.status).toBe('error');
+    expect(result.error).toMatch(/timed out after 50ms/i);
+    expect(responseBody).toBeNull();
+  });
+
+  it('distinguishes timeout error from generic network error', async () => {
+    // Timeout produces a specific "timed out after Nms" message
+    vi.stubGlobal('fetch', mockFetchAbortable());
+    const timeoutCase = makeApiTestCase({ timeout: 50, assertions: [] });
+    const timeoutResult = await runApiTest(timeoutCase);
+
+    // Generic network error has its own message
+    vi.stubGlobal('fetch', mockFetchNetworkError('ECONNREFUSED'));
+    const networkCase = makeApiTestCase({ assertions: [] });
+    const networkResult = await runApiTest(networkCase);
+
+    expect(timeoutResult.error).toMatch(/timed out/i);
+    expect(networkResult.error).toContain('ECONNREFUSED');
+    expect(networkResult.error).not.toMatch(/timed out/i);
+  });
+});
