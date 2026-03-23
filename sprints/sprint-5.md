@@ -174,7 +174,7 @@
 ## Notes
 
 ### Task 5.6: Code Review: Sprint 5 [Reviewer]
-**Status**: [NOT STARTED]
+**Status**: [COMPLETE]
 **Estimated**: 1 hour | **Actual**: - hours
 **Story Points**: 2
 **Wireframe**: -
