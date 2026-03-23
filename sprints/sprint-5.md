@@ -11,20 +11,20 @@
 ## Task Details
 
 ### Task 5.1: Install React Flow + Block Type Definitions [Frontend]
-**Status**: [NOT STARTED]
-**Estimated**: 2 hours | **Actual**: - hours
+**Status**: [COMPLETE]
+**Estimated**: 2 hours | **Actual**: 0.5 hours
 **Story Points**: 3
 **Wireframe**: -
 
 **Deliverables**:
-- [ ] package.json updated with @xyflow/react dependency
-- [ ] src/client/components/FlowBuilder/types.ts (FlowBlock, BlockType, FlowEdge types)
-- [ ] src/client/components/FlowBuilder/constants.ts (block type definitions with icons, labels, fields)
+- [x] package.json updated with @xyflow/react dependency
+- [x] src/client/components/FlowBuilder/types.ts (FlowBlock, BlockType, FlowEdge types)
+- [x] src/client/components/FlowBuilder/constants.ts (block type definitions with icons, labels, fields)
 
 **Acceptance Criteria**:
-- [ ] React Flow installed and importable
-- [ ] BlockType enum: click, fill, waitFor, assertText, navigate, login, logout
-- [ ] Each block type has: label, icon, color, configurable fields list
+- [x] React Flow installed and importable
+- [x] BlockType enum: click, fill, waitFor, assertText, navigate, login, logout
+- [x] Each block type has: label, icon, color, configurable fields list
 
 ---
 
