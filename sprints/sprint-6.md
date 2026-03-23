@@ -11,22 +11,22 @@
 ## Task Details
 
 ### Task 6.1: Shopify Theme Preview Panel [Frontend]
-**Status**: [NOT STARTED]
-**Estimated**: 3 hours | **Actual**: - hours
+**Status**: [COMPLETE]
+**Estimated**: 3 hours | **Actual**: 2 hours
 **Story Points**: 5
 **Wireframe**: -
 
 **Deliverables**:
-- [ ] src/client/components/ThemePreview/ThemePreview.tsx (iframe with password support)
-- [ ] src/client/components/ThemePreview/ThemeSettings.tsx (URL + password input)
-- [ ] src/client/components/ThemePreview/index.ts
+- [x] src/client/components/ThemePreview/ThemePreview.tsx (iframe with password support)
+- [x] src/client/components/ThemePreview/ThemeSettings.tsx (URL + password input)
+- [x] src/client/components/ThemePreview/index.ts
 
 **Acceptance Criteria**:
-- [ ] [FR10.1] Shopify theme loads in iframe
-- [ ] [FR10.3] URL input for theme preview
-- [ ] [FR10.4] Optional password field (some themes need it)
-- [ ] [FR10.5] Password saved in component state (persists during session)
-- [ ] [FR10.7] Fallback "Open in New Tab" when iframe blocked
+- [x] [FR10.1] Shopify theme loads in iframe
+- [x] [FR10.3] URL input for theme preview
+- [x] [FR10.4] Optional password field (some themes need it)
+- [x] [FR10.5] Password saved in component state (persists during session)
+- [x] [FR10.7] Fallback "Open in New Tab" when iframe blocked
 
 ---
 
