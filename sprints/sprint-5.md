@@ -66,19 +66,19 @@
 ---
 
 ### Task 5.4: Block Properties Panel [Frontend]
-**Status**: [NOT STARTED]
-**Estimated**: 3 hours | **Actual**: - hours
+**Status**: [COMPLETE]
+**Estimated**: 3 hours | **Actual**: 0.5 hours
 **Story Points**: 5
 **Wireframe**: -
 
 **Deliverables**:
-- [ ] src/client/components/FlowBuilder/BlockProperties.tsx
+- [x] src/client/components/FlowBuilder/BlockProperties.tsx
 
 **Acceptance Criteria**:
-- [ ] [FR9.3] Click block → properties panel shows editable fields
-- [ ] Fields vary by type: click/waitFor (selector), fill (selector+value), assertText (selector+expected), login (email+password), navigate (url)
-- [ ] Changes update block data in real-time
-- [ ] Label field for naming each block
+- [x] [FR9.3] Click block → properties panel shows editable fields
+- [x] Fields vary by type: click/waitFor (selector), fill (selector+value), assertText (selector+expected), login (email+password), navigate (url)
+- [x] Changes update block data in real-time
+- [x] Label field for naming each block
 
 ---
 
