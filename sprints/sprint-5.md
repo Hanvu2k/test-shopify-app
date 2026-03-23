@@ -50,18 +50,18 @@
 ---
 
 ### Task 5.3: Block Palette (Sidebar) [Frontend]
-**Status**: [NOT STARTED]
-**Estimated**: 2 hours | **Actual**: - hours
+**Status**: [COMPLETE]
+**Estimated**: 2 hours | **Actual**: 0.5 hours
 **Story Points**: 3
 **Wireframe**: -
 
 **Deliverables**:
-- [ ] src/client/components/FlowBuilder/BlockPalette.tsx
+- [x] src/client/components/FlowBuilder/BlockPalette.tsx
 
 **Acceptance Criteria**:
-- [ ] [FR9.5] Palette shows all 7 block types with icons and labels
-- [ ] Drag from palette → drop onto canvas creates new block
-- [ ] Palette compact, docked to side of canvas
+- [x] [FR9.5] Palette shows all 7 block types with icons and labels
+- [x] Drag from palette → drop onto canvas creates new block
+- [x] Palette compact, docked to side of canvas
 
 ---
 
