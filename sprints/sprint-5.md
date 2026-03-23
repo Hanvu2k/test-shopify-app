@@ -110,7 +110,7 @@
 | 5.4 | Block properties panel | 5 | [COMPLETE] | Frontend | - |
 | 5.5 | Flow ↔ JSON converter | 5 | [COMPLETE] | Frontend | - |
 | 5.6 | Code Review: Sprint 5 | 2 | [COMPLETE] | Reviewer | - |
-| 5.7 | QA: Test Sprint 5 tasks | 3 | | QA | - |
+| 5.7 | QA: Test Sprint 5 tasks | 3 | [COMPLETE] | QA | - |
 
 ---
 
