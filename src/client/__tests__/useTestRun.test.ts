@@ -135,7 +135,7 @@ describe('useTestRun', () => {
       result.current.startRun(JSON.stringify({ name: 'suite', tests: [] }));
     });
 
-    expect(mockConnect).toHaveBeenCalledWith('/api/run', { name: 'suite', tests: [] });
+    expect(mockConnect).toHaveBeenCalledWith('/api/run', { suite: { name: 'suite', tests: [] } });
     // status is 'running' but isConnected is still false from mock;
     // hook derives isRunning = status==='running' || isConnected
     expect(result.current.isRunning).toBe(true);

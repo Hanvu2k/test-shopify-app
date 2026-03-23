@@ -2,6 +2,7 @@ import { useState, useCallback, useRef } from 'react';
 import type { TestResult, RunSummary, TestEvent } from '../../core/types';
 import type { HistoryEntry } from '../components/History/HistoryPanel';
 import { useSSE } from './useSSE';
+import { abortRun as apiAbortRun } from '../services/api';
 
 // ---------------------------------------------------------------------------
 // Constants
@@ -140,11 +141,14 @@ export function useTestRun(): UseTestRunReturn {
     accumulatedResultsRef.current = [];
     runStartTimeRef.current = new Date();
 
-    connect(RUN_ENDPOINT, parsedSuite);
+    connect(RUN_ENDPOINT, { suite: parsedSuite });
   }, [connect]);
 
   const abortRun = useCallback(() => {
     disconnect();
+    apiAbortRun().catch(() => {
+      // Best-effort: server abort may fail if no run is active
+    });
     setStatus('idle');
     setProgress(null);
   }, [disconnect]);

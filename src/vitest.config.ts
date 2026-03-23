@@ -13,6 +13,7 @@ export default defineConfig({
     include: [
       'core/__tests__/**/*.test.ts',
       'client/__tests__/**/*.test.{ts,tsx}',
+      'server/__tests__/**/*.test.ts',
     ],
     setupFiles: ['client/__tests__/setup.ts'],
     coverage: {
@@ -29,6 +30,11 @@ export default defineConfig({
         'client/components/Results/TestResultCard.tsx',
         'client/components/Toolbar/Toolbar.tsx',
         'client/components/Toolbar/SaveLoadDialog.tsx',
+        'server/middleware/sse.ts',
+        'server/routes/run.ts',
+        'server/routes/suites.ts',
+        'server/routes/history.ts',
+        'client/services/api.ts',
       ],
       exclude: [
         'core/__tests__/**',
@@ -36,6 +42,8 @@ export default defineConfig({
         'core/playwright-runner.ts',
         'client/__tests__/**',
         'client/**/*.d.ts',
+        'server/__tests__/**',
+        'server/index.ts',
       ],
       thresholds: {
         lines: 80,
