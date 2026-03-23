@@ -31,22 +31,22 @@
 ---
 
 ### Task 4.2: Error Handling + Edge Cases Polish [Backend]
-**Status**: [NOT STARTED]
-**Estimated**: 2 hours | **Actual**: - hours
+**Status**: [COMPLETE]
+**Estimated**: 2 hours | **Actual**: 1 hour
 **Story Points**: 3
 **Wireframe**: -
 
 **Deliverables**:
-- [ ] src/core/suite-runner.ts (improved error handling)
-- [ ] src/core/api-runner.ts (timeout, network error handling)
-- [ ] src/core/playwright-runner.ts (timeout, element not found handling)
+- [x] src/core/suite-runner.ts (improved error handling)
+- [x] src/core/api-runner.ts (timeout, network error handling)
+- [x] src/core/playwright-runner.ts (timeout, element not found handling)
 
 **Acceptance Criteria**:
-- [ ] Graceful timeout handling for API requests
-- [ ] Graceful timeout for Playwright steps
-- [ ] Element not found produces clear error (not crash)
-- [ ] Invalid JSON in test suite produces helpful validation error
-- [ ] One test failure doesn't crash the entire suite
+- [x] Graceful timeout handling for API requests
+- [x] Graceful timeout for Playwright steps
+- [x] Element not found produces clear error (not crash)
+- [x] Invalid JSON in test suite produces helpful validation error
+- [x] One test failure doesn't crash the entire suite
 
 ---
 
