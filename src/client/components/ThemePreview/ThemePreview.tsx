@@ -1,12 +1,18 @@
-import { memo, useState, useCallback, useRef, useEffect } from 'react';
+// =============================================================================
+// ThemePreview — Screenshot-based Shopify theme preview
+// =============================================================================
+// Replaces the iframe-based approach that was blocked by CSP/cookies/JS issues.
+// Uses a Playwright-powered backend to take periodic screenshots of the theme,
+// polled by the frontend and displayed as an <img> tag. No iframe needed.
+// =============================================================================
+
+import { memo, useState, useRef, useEffect, useCallback } from 'react';
 import {
   Globe,
   ExternalLink,
   AlertTriangle,
   Loader2,
-  Lock,
 } from 'lucide-react';
-import { highlightElement, clearHighlight } from './highlighter';
 
 // ---------------------------------------------------------------------------
 // Types
@@ -18,137 +24,173 @@ export interface ThemePreviewProps {
   highlightSelector?: string | null;
 }
 
-type PreviewState = 'idle' | 'loading' | 'loaded' | 'blocked' | 'password-prompt';
+type PreviewState = 'idle' | 'starting' | 'active' | 'error';
 
 // ---------------------------------------------------------------------------
 // Constants
 // ---------------------------------------------------------------------------
 
-const SHOPIFY_PASSWORD_PATH = '/password';
-const PROXY_BASE = '/api/proxy';
+const PREVIEW_API = '/api/preview';
+const POLL_INTERVAL_MS = 800;
 
-/**
- * Build a proxied URL that routes through our backend reverse proxy.
- * This strips CSP / X-Frame-Options headers so the iframe can load.
- */
-function toProxyUrl(targetUrl: string): string {
-  return `${PROXY_BASE}?url=${encodeURIComponent(targetUrl)}`;
+// ---------------------------------------------------------------------------
+// API helpers
+// ---------------------------------------------------------------------------
+
+async function startPreview(url: string, password?: string): Promise<{ status: string }> {
+  const res = await fetch(`${PREVIEW_API}/start`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ url, password }),
+  });
+  if (!res.ok) {
+    const body = await res.json().catch(() => ({ error: 'Unknown error' }));
+    throw new Error(body.error || `Start failed (${res.status})`);
+  }
+  return res.json();
+}
+
+async function stopPreview(): Promise<void> {
+  await fetch(`${PREVIEW_API}/stop`, { method: 'POST' }).catch(() => {
+    // Best-effort — session may already be stopped
+  });
+}
+
+async function highlightElement(selector: string | null): Promise<void> {
+  await fetch(`${PREVIEW_API}/highlight`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ selector }),
+  }).catch(() => {
+    // Non-critical — highlight is cosmetic
+  });
+}
+
+async function fetchScreenshot(): Promise<string | null> {
+  const res = await fetch(`${PREVIEW_API}/screenshot`);
+  if (!res.ok) return null;
+  const blob = await res.blob();
+  return URL.createObjectURL(blob);
 }
 
 // ---------------------------------------------------------------------------
-// ThemePreview — iframe-based Shopify theme preview with password handling
+// ThemePreview — screenshot-based Shopify theme preview
 // ---------------------------------------------------------------------------
 
 export const ThemePreview = memo(
   ({ url, password, highlightSelector }: ThemePreviewProps) => {
     const [previewState, setPreviewState] = useState<PreviewState>('idle');
-    const [passwordAttempted, setPasswordAttempted] = useState(false);
-    const [proxyUrl, setProxyUrl] = useState('');
-    const iframeRef = useRef<HTMLIFrameElement>(null);
+    const [screenshotUrl, setScreenshotUrl] = useState<string | null>(null);
+    const [errorMessage, setErrorMessage] = useState('');
+    const pollRef = useRef<ReturnType<typeof setInterval> | null>(null);
+    const prevBlobUrlRef = useRef<string | null>(null);
     const hasUrl = url.trim().length > 0;
 
     // -----------------------------------------------------------------------
-    // Reset state when URL changes — submit password first if provided
+    // Cleanup polling interval
+    // -----------------------------------------------------------------------
+    const stopPolling = useCallback(() => {
+      if (pollRef.current) {
+        clearInterval(pollRef.current);
+        pollRef.current = null;
+      }
+    }, []);
+
+    // -----------------------------------------------------------------------
+    // Revoke old blob URL to prevent memory leaks
+    // -----------------------------------------------------------------------
+    const updateScreenshot = useCallback((newUrl: string | null) => {
+      if (prevBlobUrlRef.current && prevBlobUrlRef.current !== newUrl) {
+        URL.revokeObjectURL(prevBlobUrlRef.current);
+      }
+      prevBlobUrlRef.current = newUrl;
+      setScreenshotUrl(newUrl);
+    }, []);
+
+    // -----------------------------------------------------------------------
+    // Start polling for screenshots
+    // -----------------------------------------------------------------------
+    const startPolling = useCallback(() => {
+      stopPolling();
+      pollRef.current = setInterval(async () => {
+        const blobUrl = await fetchScreenshot();
+        if (blobUrl) {
+          updateScreenshot(blobUrl);
+        }
+      }, POLL_INTERVAL_MS);
+    }, [stopPolling, updateScreenshot]);
+
+    // -----------------------------------------------------------------------
+    // Start/stop preview session when URL changes
     // -----------------------------------------------------------------------
     useEffect(() => {
       if (!hasUrl) {
         setPreviewState('idle');
-        setProxyUrl('');
+        updateScreenshot(null);
         return;
       }
 
-      setPreviewState('loading');
-      setPasswordAttempted(false);
+      let cancelled = false;
 
-      // If a password is provided, POST it through the proxy first so the
-      // session cookie gets set, then load the main page.
-      if (password) {
-        const passwordUrl = new URL(url);
-        passwordUrl.pathname = SHOPIFY_PASSWORD_PATH;
+      async function init() {
+        setPreviewState('starting');
+        setErrorMessage('');
+        updateScreenshot(null);
 
-        fetch(toProxyUrl(passwordUrl.href), {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-          body: new URLSearchParams({ password }).toString(),
-          credentials: 'include',
-        })
-          .then(() => {
-            setPasswordAttempted(true);
-            setProxyUrl(toProxyUrl(url));
-          })
-          .catch(() => {
-            // Password submission failed — still try loading the page
-            setProxyUrl(toProxyUrl(url));
-          });
-      } else {
-        setProxyUrl(toProxyUrl(url));
+        try {
+          // Stop any previous session
+          await stopPreview();
+
+          // Start new session
+          await startPreview(url, password);
+
+          if (cancelled) return;
+
+          setPreviewState('active');
+
+          // Fetch first screenshot immediately
+          const blobUrl = await fetchScreenshot();
+          if (!cancelled && blobUrl) {
+            updateScreenshot(blobUrl);
+          }
+
+          // Start polling
+          if (!cancelled) {
+            startPolling();
+          }
+        } catch (err) {
+          if (cancelled) return;
+          setPreviewState('error');
+          setErrorMessage(err instanceof Error ? err.message : String(err));
+        }
       }
-    }, [url, password, hasUrl]);
+
+      init();
+
+      return () => {
+        cancelled = true;
+        stopPolling();
+        stopPreview();
+      };
+    }, [url, password, hasUrl, startPolling, stopPolling, updateScreenshot]);
 
     // -----------------------------------------------------------------------
-    // Highlight selector changes
+    // Handle highlight selector changes
     // -----------------------------------------------------------------------
     useEffect(() => {
-      const iframe = iframeRef.current;
-      if (!iframe) return;
-
-      if (highlightSelector) {
-        highlightElement(iframe, highlightSelector);
-      } else {
-        clearHighlight(iframe);
-      }
-    }, [highlightSelector]);
+      if (previewState !== 'active') return;
+      highlightElement(highlightSelector ?? null);
+    }, [highlightSelector, previewState]);
 
     // -----------------------------------------------------------------------
-    // Handle iframe load — detect password page & auto-submit
+    // Cleanup blob URL on unmount
     // -----------------------------------------------------------------------
-    const handleIframeLoad = useCallback(() => {
-      const iframe = iframeRef.current;
-      if (!iframe) return;
-
-      // Since we now proxy through localhost, the iframe is same-origin
-      // and we can access contentDocument reliably.
-      try {
-        const iframeDoc = iframe.contentDocument || iframe.contentWindow?.document;
-        if (iframeDoc) {
-          // Check if the page content is a Shopify password page
-          const hasPasswordForm = iframeDoc.querySelector(
-            'form[action*="password"]',
-          );
-          const bodyText = iframeDoc.body?.textContent ?? '';
-          const looksLikePasswordPage =
-            hasPasswordForm ||
-            bodyText.includes('Enter store using password');
-
-          if (looksLikePasswordPage && !passwordAttempted) {
-            if (password) {
-              // Auto-submit password through the proxy
-              setPasswordAttempted(true);
-              attemptPasswordSubmit(iframeDoc, password);
-              return;
-            }
-            // No password provided — prompt user
-            setPreviewState('password-prompt');
-            return;
-          }
+    useEffect(() => {
+      return () => {
+        if (prevBlobUrlRef.current) {
+          URL.revokeObjectURL(prevBlobUrlRef.current);
         }
-      } catch {
-        // Unexpected error accessing document — continue to loaded state
-      }
-
-      setPreviewState('loaded');
-
-      // Re-apply highlight after page load (now works since same-origin!)
-      if (highlightSelector && iframe) {
-        // Small delay to let the page render
-        requestAnimationFrame(() => {
-          highlightElement(iframe, highlightSelector);
-        });
-      }
-    }, [password, passwordAttempted, highlightSelector]);
-
-    const handleIframeError = useCallback(() => {
-      setPreviewState('blocked');
+      };
     }, []);
 
     const openInNewTab = useCallback(() => {
@@ -169,20 +211,17 @@ export const ThemePreview = memo(
             <span className="text-xs font-semibold text-text-primary truncate">
               Theme Preview
             </span>
-            {previewState === 'loading' && (
+            {previewState === 'starting' && (
               <Loader2
                 size={12}
                 className="text-text-muted animate-spin flex-shrink-0"
               />
             )}
-            {previewState === 'blocked' && (
+            {previewState === 'error' && (
               <AlertTriangle
                 size={12}
                 className="text-yellow-500 flex-shrink-0"
               />
-            )}
-            {previewState === 'password-prompt' && (
-              <Lock size={12} className="text-yellow-500 flex-shrink-0" />
             )}
           </div>
 
@@ -204,32 +243,26 @@ export const ThemePreview = memo(
         <div className="flex-1 relative min-h-0 overflow-hidden">
           {!hasUrl && <EmptyState />}
 
-          {hasUrl && previewState === 'blocked' && (
-            <BlockedState url={url} onOpenInNewTab={openInNewTab} />
+          {hasUrl && previewState === 'error' && (
+            <ErrorState message={errorMessage} url={url} onOpenInNewTab={openInNewTab} />
           )}
 
-          {hasUrl && previewState === 'password-prompt' && (
-            <PasswordPromptState />
-          )}
+          {hasUrl && previewState === 'starting' && <LoadingState />}
 
-          {hasUrl && proxyUrl && (
-            <iframe
-              ref={iframeRef}
-              src={proxyUrl}
-              title="Shopify theme preview"
-              onLoad={handleIframeLoad}
-              onError={handleIframeError}
-              className={[
-                'absolute inset-0 w-full h-full border-0 bg-white',
-                previewState === 'loaded'
-                  ? 'opacity-100'
-                  : 'opacity-0 pointer-events-none',
-              ].join(' ')}
-              sandbox="allow-scripts allow-same-origin allow-forms allow-popups"
-            />
+          {hasUrl && previewState === 'active' && (
+            <div className="absolute inset-0 flex items-center justify-center bg-white">
+              {screenshotUrl ? (
+                <img
+                  src={screenshotUrl}
+                  alt="Shopify theme preview"
+                  className="w-full h-full object-contain"
+                  draggable={false}
+                />
+              ) : (
+                <LoadingState />
+              )}
+            </div>
           )}
-
-          {hasUrl && previewState === 'loading' && <LoadingState />}
         </div>
       </div>
     );
@@ -237,47 +270,6 @@ export const ThemePreview = memo(
 );
 
 ThemePreview.displayName = 'ThemePreview';
-
-// ---------------------------------------------------------------------------
-// Password auto-submit helper
-// ---------------------------------------------------------------------------
-
-function attemptPasswordSubmit(doc: Document, password: string): void {
-  try {
-    // Look for password input field on Shopify password page
-    const passwordInput = doc.querySelector<HTMLInputElement>(
-      'input[type="password"], input[name="password"]',
-    );
-
-    if (passwordInput) {
-      // Set the value using native setter to trigger React/Shopify handlers
-      const nativeSetter = Object.getOwnPropertyDescriptor(
-        HTMLInputElement.prototype,
-        'value',
-      )?.set;
-      if (nativeSetter) {
-        nativeSetter.call(passwordInput, password);
-      } else {
-        passwordInput.value = password;
-      }
-
-      // Dispatch input event so frameworks pick up the change
-      passwordInput.dispatchEvent(new Event('input', { bubbles: true }));
-      passwordInput.dispatchEvent(new Event('change', { bubbles: true }));
-
-      // Find and submit the form
-      const form = passwordInput.closest('form');
-      if (form) {
-        // Small delay to let event handlers process
-        setTimeout(() => {
-          form.submit();
-        }, 100);
-      }
-    }
-  } catch {
-    // Cross-origin or other issue — ignore, user will see the prompt
-  }
-}
 
 // ---------------------------------------------------------------------------
 // Sub-state components
@@ -307,22 +299,22 @@ function LoadingState() {
   );
 }
 
-interface BlockedStateProps {
+interface ErrorStateProps {
+  message: string;
   url: string;
   onOpenInNewTab: () => void;
 }
 
-function BlockedState({ url, onOpenInNewTab }: BlockedStateProps) {
+function ErrorState({ message, url, onOpenInNewTab }: ErrorStateProps) {
   return (
     <div className="absolute inset-0 flex items-center justify-center p-6 bg-surface">
       <div className="text-center border border-yellow-500/30 bg-yellow-500/10 rounded-lg p-6 max-w-xs">
         <AlertTriangle size={24} className="mx-auto mb-2 text-yellow-500" />
         <p className="text-sm font-medium text-text-primary mb-1">
-          Cannot embed this page
+          Preview failed
         </p>
-        <p className="text-xs text-text-muted mb-4">
-          The site blocks iframe embedding (X-Frame-Options). Open it in a new
-          tab instead.
+        <p className="text-xs text-text-muted mb-2">
+          {message || 'Could not start the preview session.'}
         </p>
         <p className="text-xs text-text-muted mb-4 font-mono truncate opacity-75">
           {url}
@@ -335,23 +327,6 @@ function BlockedState({ url, onOpenInNewTab }: BlockedStateProps) {
           <ExternalLink size={12} />
           Open in New Tab
         </button>
-      </div>
-    </div>
-  );
-}
-
-function PasswordPromptState() {
-  return (
-    <div className="absolute inset-0 flex items-center justify-center p-6 bg-surface">
-      <div className="text-center border border-yellow-500/30 bg-yellow-500/10 rounded-lg p-6 max-w-xs">
-        <Lock size={24} className="mx-auto mb-2 text-yellow-500" />
-        <p className="text-sm font-medium text-text-primary mb-1">
-          Password required
-        </p>
-        <p className="text-xs text-text-muted">
-          This theme preview requires a password. Enter it in the password field
-          above and click Load again.
-        </p>
       </div>
     </div>
   );
