@@ -168,6 +168,48 @@ When running npx tsx cli.ts test.json
 Then stdout shows detailed results per test, stderr shows JSON summary, exit code reflects pass/fail
 ```
 
+### FR9: Visual Flow Builder (replaces JSON editor)
+**Priority**: MUST HAVE
+
+**Requirements**:
+- FR9.1: Thay thế JSON editor bằng visual canvas nơi người dùng kéo thả blocks
+- FR9.2: Mỗi block đại diện cho 1 UI step (click, fill, waitFor, assertText, login, logout, navigate)
+- FR9.3: Mỗi block có fields: tên block (label), CSS selector, và fields riêng theo action type (value cho fill, expected cho assertText, email/password cho login)
+- FR9.4: Blocks nối với nhau bằng đường kẻ (edges) trên canvas — luồng linear (1 → 1)
+- FR9.5: Drag & drop blocks từ palette vào canvas, kéo đường nối giữa blocks
+- FR9.6: Canvas hỗ trợ zoom, pan, chọn/xóa blocks
+- FR9.7: Flow tự động convert sang TestSuite JSON format hiện tại khi Run
+- FR9.8: Import JSON test suite cũ → hiển thị thành blocks trên canvas
+- FR9.9: Save flow → lưu dưới dạng JSON test suite format (tương thích CLI)
+
+**Acceptance Criteria**:
+```
+Given the Visual Flow Builder is open
+When user drags blocks onto canvas and connects them
+Then a valid test flow is created that can be executed
+And the flow can be saved/loaded as standard JSON test suite
+```
+
+### FR10: Shopify Theme Preview Panel
+**Priority**: MUST HAVE
+
+**Requirements**:
+- FR10.1: Panel bên trái hiển thị Shopify theme preview trong iframe
+- FR10.2: Chiếm 60% width bên trái, canvas chiếm 40%
+- FR10.3: Input URL cho Shopify theme preview
+- FR10.4: Optional theme password field (Shopify đôi khi yêu cầu password để vào preview)
+- FR10.5: Password lưu trong settings/config, nhập một lần
+- FR10.6: Khi chạy test, element đang tương tác được highlight trên preview
+- FR10.7: Fallback "Open in New Tab" khi iframe bị block bởi X-Frame-Options
+
+**Acceptance Criteria**:
+```
+Given a Shopify theme preview URL (and optional password)
+When user enters URL and password
+Then theme preview loads in the left panel
+And during test execution, active elements are highlighted
+```
+
 ### FR8: Test Suite Management
 **Priority**: SHOULD HAVE
 
