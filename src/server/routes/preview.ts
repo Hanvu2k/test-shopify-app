@@ -14,8 +14,12 @@
 
 import { Router } from 'express';
 import type { Request, Response } from 'express';
-import { chromium } from 'playwright';
-import type { Browser, Page } from 'playwright';
+import type { Page } from 'playwright';
+import {
+  getPreviewPage,
+  takePreviewScreenshot,
+  closePreview,
+} from '../browser-manager.js';
 
 // -----------------------------------------------------------------------------
 // Configuration
@@ -23,7 +27,6 @@ import type { Browser, Page } from 'playwright';
 
 const SCREENSHOT_INTERVAL_MS = 1000;
 const SCREENSHOT_QUALITY = 70;
-const VIEWPORT = { width: 1280, height: 800 };
 const NAVIGATION_TIMEOUT_MS = 30_000;
 
 // Highlight injection CSS — applied via page.evaluate
@@ -39,7 +42,6 @@ const HIGHLIGHT_CSS = `
 // State — single preview session at a time
 // -----------------------------------------------------------------------------
 
-let browser: Browser | null = null;
 let page: Page | null = null;
 let screenshotInterval: ReturnType<typeof setInterval> | null = null;
 let latestScreenshot: Buffer | null = null;
@@ -51,16 +53,9 @@ let sessionActive = false;
 // -----------------------------------------------------------------------------
 
 async function captureScreenshot(): Promise<void> {
-  if (!page || page.isClosed()) return;
-
-  try {
-    latestScreenshot = await page.screenshot({
-      type: 'jpeg',
-      quality: SCREENSHOT_QUALITY,
-      fullPage: false,
-    });
-  } catch {
-    // Page may have navigated or crashed — skip this frame
+  const screenshot = await takePreviewScreenshot(SCREENSHOT_QUALITY);
+  if (screenshot) {
+    latestScreenshot = screenshot;
   }
 }
 
@@ -121,16 +116,9 @@ async function cleanup(): Promise<void> {
   sessionActive = false;
   latestScreenshot = null;
   currentUrl = '';
-
-  if (page && !page.isClosed()) {
-    await page.close().catch(() => {});
-  }
   page = null;
 
-  if (browser) {
-    await browser.close().catch(() => {});
-  }
-  browser = null;
+  await closePreview();
 }
 
 // -----------------------------------------------------------------------------
@@ -152,17 +140,8 @@ router.post('/start', async (req: Request, res: Response) => {
     // Clean up any existing session
     await cleanup();
 
-    // Launch headless browser
-    browser = await chromium.launch({ headless: true });
-    const context = await browser.newContext({
-      viewport: VIEWPORT,
-      userAgent:
-        'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-    });
-    page = await context.newPage();
-
-    // Suppress page errors so they don't crash the process
-    page.on('pageerror', () => {});
+    // Get shared preview page from browser-manager
+    page = await getPreviewPage();
 
     // Navigate to the target URL
     await page.goto(url, {

@@ -6,6 +6,7 @@
 // support, and per-test event streaming.
 // =============================================================================
 
+import type { BrowserContext } from 'playwright';
 import type {
   TestSuite,
   TestCase,
@@ -81,6 +82,9 @@ function validateSuite(suite: unknown): string | null {
 export interface SuiteRunnerOptions {
   /** AbortSignal to cancel the suite mid-execution. */
   abortSignal?: AbortSignal;
+  /** When provided, UI tests run inside this browser context instead of launching a new browser.
+   *  Used by the web server to share the preview browser with the test runner. */
+  browserContext?: BrowserContext;
 }
 
 // -----------------------------------------------------------------------------
@@ -150,7 +154,7 @@ export async function runSuite(
         result = await executeApiTest(interpolated, variables);
       } else {
         usedPlaywright = true;
-        result = await executeUiTest(interpolated, variables);
+        result = await executeUiTest(interpolated, variables, options?.browserContext);
       }
     } catch (unexpectedError) {
       // Catch-all: never let one test crash the entire suite
@@ -180,7 +184,8 @@ export async function runSuite(
   }
 
   // ---- Cleanup ----
-  if (usedPlaywright) {
+  // Only close the standalone browser when we launched it (no external context)
+  if (usedPlaywright && !options?.browserContext) {
     await closeBrowser();
   }
 
@@ -231,8 +236,9 @@ async function executeApiTest(
 async function executeUiTest(
   testCase: UiTestCase,
   variables: Map<string, unknown>,
+  browserContext?: BrowserContext,
 ): Promise<TestResult> {
-  const { result, getText, cleanup } = await runUiTestWithPage(testCase);
+  const { result, getText, cleanup } = await runUiTestWithPage(testCase, { browserContext });
 
   // Extract and save variables from page DOM when test passes
   if (testCase.saveAs && getText) {

@@ -8,10 +8,12 @@
 // =============================================================================
 
 import { Router } from 'express';
+import type { BrowserContext } from 'playwright';
 import type { TestSuite, TestEvent } from '../../core/types.js';
 import { runSuite } from '../../core/suite-runner.js';
 import { setSSEHeaders, sendEvent, closeSSE } from '../middleware/sse.js';
 import { addToHistory } from './history.js';
+import { createTestContext } from '../browser-manager.js';
 
 // Track the currently active run's AbortController (one run at a time)
 let activeController: AbortController | null = null;
@@ -56,8 +58,18 @@ router.post('/run', (req, res) => {
     sendEvent(res, event.type, event);
   };
 
-  // Execute the suite
-  runSuite(suite, onEvent, { abortSignal: controller.signal })
+  // Create a shared browser context for UI tests so they run in the same
+  // browser as the preview service (no extra window popping up)
+  let testContext: BrowserContext | null = null;
+
+  createTestContext()
+    .then((ctx) => {
+      testContext = ctx;
+      return runSuite(suite, onEvent, {
+        abortSignal: controller.signal,
+        browserContext: testContext,
+      });
+    })
     .then((summary) => {
       // Store in history
       addToHistory(summary);
@@ -70,7 +82,11 @@ router.post('/run', (req, res) => {
       sendEvent(res, 'suite:error', { type: 'suite:error', error: message });
       closeSSE(res);
     })
-    .finally(() => {
+    .finally(async () => {
+      // Clean up the test context (browser stays alive for preview)
+      if (testContext) {
+        await testContext.close().catch(() => {});
+      }
       if (activeController === controller) {
         activeController = null;
       }

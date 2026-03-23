@@ -14,6 +14,7 @@ import runRouter from './routes/run.js';
 import suitesRouter from './routes/suites.js';
 import historyRouter from './routes/history.js';
 import previewRouter from './routes/preview.js';
+import { closeBrowser } from './browser-manager.js';
 
 const PORT = 3737;
 
@@ -54,9 +55,13 @@ const server = app.listen(PORT, () => {
 // Graceful shutdown
 function shutdown() {
   console.log('\nShutting down gracefully...');
-  server.close(() => {
-    process.exit(0);
-  });
+  closeBrowser()
+    .catch(() => {})
+    .finally(() => {
+      server.close(() => {
+        process.exit(0);
+      });
+    });
   // Force exit after 5 seconds
   setTimeout(() => process.exit(1), 5000);
 }
