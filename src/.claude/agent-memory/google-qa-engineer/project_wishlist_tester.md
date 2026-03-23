@@ -36,8 +36,16 @@ Sprint 2 QA results (2026-03-21):
 - TestResultCard.tsx: 100% all metrics
 - Overall client+core: 96.31% statements, 93.82% branches, 100% functions
 
+Sprint 6 QA results (2026-03-23):
+- 421 tests total (395 prior + 26 new highlighter tests), all passing
+- New test file: src/client/__tests__/highlighter.test.ts
+- highlighter.ts uses mock iframes with Object.defineProperty on contentDocument/contentWindow
+- Cross-origin iframes are simulated by making contentDocument getter throw SecurityError
+- Coverage: 96.2% statements, 93.07% branches, 100% functions — all 80% thresholds met
+
 Notes:
 - jsdom 27 has CSS ESM module issues with vitest; use happy-dom instead
 - useSSE relies on fetch + ReadableStream mocking; use createControllableStream helper pattern
 - useTestRun mock: vi.mock('../hooks/useSSE') captures callbacks for synthetic event injection
 - Toolbar backdrop click test uses fireEvent.click(dialog) directly (not backdrop parent) due to e.target===e.currentTarget check
+- highlighter.ts tests: use DOMParser to create a real happy-dom document for the iframe content; Object.defineProperty to fake contentDocument/contentWindow on a real iframe element

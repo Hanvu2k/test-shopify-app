@@ -7,3 +7,4 @@
 - [Sprint 3 code review findings](project_sprint3_findings.md) — Dead accumulatedResultsRef persists, saveSuite uncaught SyntaxError, misleading history timestamps, SSE event: line ignored, CLI process.exit inside function. Verdict: NEEDS MINOR.
 - [Sprint 4 code review findings](project_sprint4_findings.md) — Dockerfile broken (npm ci --production excludes vite+tsx), CI doesn't build server TS, runApiTest dead-code duplication. Verdict: NEEDS MAJOR.
 - [Sprint 5 code review findings](project_sprint5_findings.md) — Wrong node type string breaks jsonToFlow import, FlowBuilder not wired to BlockPalette/BlockProperties, ICON_MAP duplicated 3x, incomplete barrel. Verdict: NEEDS MAJOR.
+- [Sprint 6 code review findings](project_sprint6_findings.md) — handleLoadTheme no-op, ThemeSettings dead code, initialNodes/Edges pattern breaks Load Suite, accumulatedResultsRef still dead, highlight index unreliable. Verdict: NEEDS MINOR.
