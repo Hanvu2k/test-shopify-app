@@ -363,7 +363,8 @@ Scenario: Drag block to canvas
 
 | Priority | Stories | Total Points |
 |----------|---------|-------------|
-| MUST | US-001, US-003, US-004, US-005, US-006, US-007, US-011 | 32 |
+| MUST (v1) | US-001, US-003, US-004, US-005, US-006, US-007, US-011 | 32 |
+| MUST (v2) | US-012, US-013, US-014, US-015, US-016 | 26 |
 | SHOULD | US-002, US-008, US-009, US-010 | 10 |
-| COULD | (future: export, templates, dark mode) | — |
-| **Total** | **11 stories** | **42 points** |
+| COULD | (future: export, templates, dark mode, selector picker) | — |
+| **Total** | **16 stories** | **68 points** |
