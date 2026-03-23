@@ -11,12 +11,14 @@
 ## Task Details
 
 ### Task 2.1: React + Vite + TailwindCSS Setup [Frontend]
+
 **Status**: [COMPLETE]
 **Estimated**: 2 hours | **Actual**: 1 hours
 **Story Points**: 2
 **Wireframe**: -
 
 **Deliverables**:
+
 - [x] src/client/index.html
 - [x] src/client/main.tsx
 - [x] src/client/App.tsx (main layout with split panels)
@@ -26,6 +28,7 @@
 - [x] src/client/styles/globals.css
 
 **Acceptance Criteria**:
+
 - [x] Vite dev server runs on port 5273
 - [x] TailwindCSS configured and working
 - [x] Split panel layout renders (left editor, right results)
@@ -33,16 +36,19 @@
 ---
 
 ### Task 2.2: JSON Editor Component (CodeMirror 6) [Frontend]
+
 **Status**: [COMPLETE]
 **Estimated**: 3 hours | **Actual**: 1 hours
 **Story Points**: 5
 **Wireframe**: 01-main-screen.md
 
 **Deliverables**:
+
 - [x] src/client/components/Editor/JsonEditor.tsx
 - [x] src/client/components/Editor/index.ts
 
 **Acceptance Criteria**:
+
 - [x] [FR6.3] CodeMirror 6 with JSON syntax highlighting
 - [x] JSON validation errors shown inline
 - [x] Resizable panel width
@@ -51,18 +57,21 @@
 ---
 
 ### Task 2.3: Results Panel Component [Frontend]
+
 **Status**: [COMPLETE]
 **Estimated**: 3 hours | **Actual**: 2 hours
 **Story Points**: 5
 **Wireframe**: 02-results-panel.md
 
 **Deliverables**:
+
 - [x] src/client/components/Results/ResultsPanel.tsx
 - [x] src/client/components/Results/TestResultCard.tsx
 - [x] src/client/components/Results/SummaryBar.tsx
 - [x] src/client/components/Results/index.ts
 
 **Acceptance Criteria**:
+
 - [x] [FR6.4] Displays test results in real-time stream
 - [x] Each result shows: name, type badge (api/ui), status (pass/fail), duration
 - [x] Expandable details: assertion results, expected vs actual
@@ -72,17 +81,20 @@
 ---
 
 ### Task 2.4: Toolbar Component (Run/Abort/Save/Load/URL) [Frontend]
+
 **Status**: [COMPLETE]
 **Estimated**: 3 hours | **Actual**: 1.5 hours
 **Story Points**: 5
 **Wireframe**: 01-main-screen.md
 
 **Deliverables**:
+
 - [x] src/client/components/Toolbar/Toolbar.tsx
 - [x] src/client/components/Toolbar/SaveLoadDialog.tsx
 - [x] src/client/components/Toolbar/index.ts
 
 **Acceptance Criteria**:
+
 - [x] [FR6.5] Run button triggers test execution
 - [x] [FR6.6] Abort button stops running tests
 - [x] [FR6.7] Save/Load dialog for test-suites/
@@ -92,12 +104,14 @@
 ---
 
 ### Task 2.5: History Panel + URL Preview + Hooks [Frontend]
+
 **Status**: [COMPLETE]
 **Estimated**: 2 hours | **Actual**: 2 hours
 **Story Points**: 3
 **Wireframe**: 03-history-panel.md
 
 **Deliverables**:
+
 - [x] src/client/components/History/HistoryPanel.tsx
 - [x] src/client/components/History/index.ts
 - [x] src/client/components/Preview/UrlPreview.tsx
@@ -107,6 +121,7 @@
 - [x] src/client/hooks/index.ts
 
 **Acceptance Criteria**:
+
 - [x] [FR6.8] History list shows past runs with date, suite name, pass/fail count
 - [x] Click to view past run details
 - [x] [FR6.10] URL preview iframe or link to target page
@@ -117,39 +132,40 @@
 
 ## Sprint Backlog (Machine-Parseable)
 
-| ID | Task | Points | Status | Assignee | Wireframe |
-|----|------|--------|--------|----------|-----------|
-| 2.1 | React + Vite + TailwindCSS setup | 2 | [COMPLETE] | Frontend | - |
-| 2.2 | JSON editor component (CodeMirror 6) | 5 | [COMPLETE] | Frontend | 01-main-screen.md |
-| 2.3 | Results panel component | 5 | [COMPLETE] | Frontend | 02-results-panel.md |
-| 2.4 | Toolbar (Run/Abort/Save/Load/URL) | 5 | [COMPLETE] | Frontend | 01-main-screen.md |
-| 2.5 | History panel + URL preview + hooks | 3 | [COMPLETE] | Frontend | 03-history-panel.md |
-| 2.6 | Code Review: Sprint 2 | 2 | [COMPLETE] | Reviewer | - |
-| 2.7 | QA: Test Sprint 2 tasks | 3 | [COMPLETE] | QA | - |
+| ID  | Task                                 | Points | Status     | Assignee | Wireframe           |
+| --- | ------------------------------------ | ------ | ---------- | -------- | ------------------- |
+| 2.1 | React + Vite + TailwindCSS setup     | 2      | [COMPLETE] | Frontend | -                   |
+| 2.2 | JSON editor component (CodeMirror 6) | 5      | [COMPLETE] | Frontend | 01-main-screen.md   |
+| 2.3 | Results panel component              | 5      | [COMPLETE] | Frontend | 02-results-panel.md |
+| 2.4 | Toolbar (Run/Abort/Save/Load/URL)    | 5      | [COMPLETE] | Frontend | 01-main-screen.md   |
+| 2.5 | History panel + URL preview + hooks  | 3      | [COMPLETE] | Frontend | 03-history-panel.md |
+| 2.6 | Code Review: Sprint 2                | 2      | [COMPLETE] | Reviewer | -                   |
+| 2.7 | QA: Test Sprint 2 tasks              | 3      | [COMPLETE] | QA       | -                   |
 
 ---
 
 ## Sprint Summary
 
-| Metric | Value |
-|--------|-------|
-| Total Tasks | 7 |
-| Story Points | 25 |
-| Estimated Hours | 13h |
-| Actual Hours | -h |
-| Velocity | -% |
+| Metric          | Value |
+| --------------- | ----- |
+| Total Tasks     | 7     |
+| Story Points    | 25    |
+| Estimated Hours | 13h   |
+| Actual Hours    | -h    |
+| Velocity        | -%    |
 
-| Role | Tasks | Points | Hours |
-|------|-------|--------|-------|
-| Frontend | 5 | 20 | 13h |
-| Reviewer | 1 | 2 | -h |
-| QA | 1 | 3 | -h |
+| Role     | Tasks | Points | Hours |
+| -------- | ----- | ------ | ----- |
+| Frontend | 5     | 20     | 13h   |
+| Reviewer | 1     | 2      | -h    |
+| QA       | 1     | 3      | -h    |
 
 ---
 
 ## Definition of Done
 
 ### Functional Criteria
+
 - [ ] JSON editor has syntax highlighting and validation
 - [ ] Results panel renders test cards with pass/fail status
 - [ ] Toolbar buttons work (Run triggers callback, Abort triggers callback)
@@ -157,12 +173,14 @@
 - [ ] History panel shows past run list
 
 ### Technical Criteria
+
 - [ ] All tasks marked [COMPLETE] in Sprint Backlog
 - [ ] Code reviewed (LGTM from google-code-reviewer)
 - [ ] No TypeScript errors
 - [ ] Components are properly typed with React.FC
 
 ### Quality Criteria
+
 - [ ] UI looks clean, developer-tool aesthetic
 - [ ] Responsive split panel layout
 - [ ] No console errors
@@ -171,50 +189,56 @@
 
 ## Dependencies
 
-| Dependency | Reason | Status |
-|------------|--------|--------|
-| Sprint 1 complete | Core types needed for result interfaces | Pending |
-| Task 2.1 → all others | Vite/React setup needed first | Pending |
-| Wireframes ready | UX wireframes for component layout | Pending |
+| Dependency            | Reason                                  | Status  |
+| --------------------- | --------------------------------------- | ------- |
+| Sprint 1 complete     | Core types needed for result interfaces | Pending |
+| Task 2.1 → all others | Vite/React setup needed first           | Pending |
+| Wireframes ready      | UX wireframes for component layout      | Pending |
 
 ---
 
 ## Risks & Blockers
 
-| # | Type | Description | Impact | Mitigation | Owner | Status |
-|---|------|-------------|--------|------------|-------|--------|
-| 1 | Risk | CodeMirror 6 bundle size may be large | L | Tree-shake, lazy load | Frontend | Open |
+| #   | Type | Description                           | Impact | Mitigation            | Owner    | Status |
+| --- | ---- | ------------------------------------- | ------ | --------------------- | -------- | ------ |
+| 1   | Risk | CodeMirror 6 bundle size may be large | L      | Tree-shake, lazy load | Frontend | Open   |
 
 ---
 
 ## Notes
 
 ### Task 2.6: Code Review: Sprint 2 [Reviewer]
+
 **Status**: [COMPLETE]
 **Estimated**: 1 hour | **Actual**: 1 hour
 **Story Points**: 2
 **Wireframe**: -
 
 **Deliverables**:
+
 - [x] Code review report for all Sprint 2 tasks
 
 **Acceptance Criteria**:
+
 - [x] All code reviewed for quality, security, correctness
 - [x] LGTM or issues reported — Verdict: NEEDS MINOR (2 major, 7 minor)
 
 ---
 
 ### Task 2.7: QA: Test Sprint 2 tasks [QA]
+
 **Status**: [COMPLETE]
 **Estimated**: 2 hours | **Actual**: 2 hours
 **Story Points**: 3
 **Wireframe**: -
 
 **Deliverables**:
+
 - [x] Component tests for frontend
 - [x] Test report
 
 **Acceptance Criteria**:
+
 - [x] UI components render correctly
 - [x] 80%+ coverage on new code (actual: 96.31% statements, 93.82% branches, 100% functions)
 - [x] QA sign-off
@@ -233,16 +257,20 @@
 ## Sprint Retrospective
 
 ### What Went Well
+
 - {TBD}
 
 ### What Needs Improvement
+
 - {TBD}
 
 ### Carry Over to Next Sprint
+
 - {TBD}
 
 ### Time Analysis
-| Metric | Estimated | Actual | Variance |
-|--------|-----------|--------|----------|
-| Total Hours | 13h | TBDh | - |
-| Velocity | 100% | -% | - |
+
+| Metric      | Estimated | Actual | Variance |
+| ----------- | --------- | ------ | -------- |
+| Total Hours | 13h       | TBDh   | -        |
+| Velocity    | 100%      | -%     | -        |
