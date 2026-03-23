@@ -50,20 +50,20 @@
 ---
 
 ### Task 6.3: App.tsx Rewrite — New Layout [Frontend]
-**Status**: [NOT STARTED]
-**Estimated**: 3 hours | **Actual**: - hours
+**Status**: [COMPLETE]
+**Estimated**: 3 hours | **Actual**: 2 hours
 **Story Points**: 5
 **Wireframe**: -
 
 **Deliverables**:
-- [ ] src/client/App.tsx (rewritten with new 3-panel layout)
+- [x] src/client/App.tsx (rewritten with new 3-panel layout)
 
 **Acceptance Criteria**:
-- [ ] [FR10.2] Layout: ThemePreview (60%) | FlowBuilder+Palette (40%) | Results (side panel)
-- [ ] Top toolbar: URL, theme password, Run, Abort, Save, Load, History
-- [ ] Run button: converts flow → JSON → POST /api/run
-- [ ] Save/Load: uses flowConverter for bidirectional conversion
-- [ ] All existing features preserved (history, abort, SSE streaming)
+- [x] [FR10.2] Layout: ThemePreview (60%) | FlowBuilder+Palette (40%) | Results (side panel)
+- [x] Top toolbar: URL, theme password, Run, Abort, Save, Load, History
+- [x] Run button: converts flow → JSON → POST /api/run
+- [x] Save/Load: uses flowConverter for bidirectional conversion
+- [x] All existing features preserved (history, abort, SSE streaming)
 
 ---
 
