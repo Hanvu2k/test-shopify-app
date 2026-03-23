@@ -1,0 +1,28 @@
+{
+  "name": "API Test Example",
+  "baseUrl": "https://httpbin.org",
+  "tests": [
+    {
+      "name": "GET request",
+      "type": "api",
+      "method": "GET",
+      "url": "{{baseUrl}}/get?foo=bar",
+      "assertions": [
+        { "type": "status", "expected": 200 },
+        { "type": "jsonpath", "path": "$.args.foo", "expected": "bar" }
+      ],
+      "saveAs": { "origin": "$.origin" }
+    },
+    {
+      "name": "POST with saved variable",
+      "type": "api",
+      "method": "POST",
+      "url": "{{baseUrl}}/post",
+      "body": { "origin": "{{origin}}", "test": true },
+      "assertions": [
+        { "type": "status", "expected": 200 },
+        { "type": "bodyContains", "expected": "origin" }
+      ]
+    }
+  ]
+}

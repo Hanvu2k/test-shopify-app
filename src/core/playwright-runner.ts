@@ -56,35 +56,48 @@ async function executeNavigate(page: Page, step: UiStep, testCaseUrl: string): P
   await page.goto(targetUrl, { waitUntil: 'domcontentloaded' });
 }
 
-async function executeClick(page: Page, step: UiStep): Promise<void> {
+async function executeClick(page: Page, step: UiStep, timeoutMs: number): Promise<void> {
   if (!step.selector) {
     throw new Error('Click step requires a selector');
   }
-  await page.waitForSelector(step.selector, { state: 'visible', timeout: DEFAULT_TIMEOUT_MS });
+  try {
+    await page.waitForSelector(step.selector, { state: 'visible', timeout: timeoutMs });
+  } catch {
+    throw new Error(`Element not found: "${step.selector}" was not visible within ${timeoutMs}ms`);
+  }
   await page.click(step.selector);
 }
 
-async function executeFill(page: Page, step: UiStep): Promise<void> {
+async function executeFill(page: Page, step: UiStep, timeoutMs: number): Promise<void> {
   if (!step.selector) {
     throw new Error('Fill step requires a selector');
   }
   if (step.value === undefined) {
     throw new Error('Fill step requires a value');
   }
-  await page.waitForSelector(step.selector, { state: 'visible', timeout: DEFAULT_TIMEOUT_MS });
+  try {
+    await page.waitForSelector(step.selector, { state: 'visible', timeout: timeoutMs });
+  } catch {
+    throw new Error(`Element not found: "${step.selector}" was not visible within ${timeoutMs}ms`);
+  }
   await page.fill(step.selector, step.value);
 }
 
-async function executeWaitFor(page: Page, step: UiStep): Promise<void> {
+async function executeWaitFor(page: Page, step: UiStep, timeoutMs: number): Promise<void> {
   if (!step.selector) {
     throw new Error('WaitFor step requires a selector');
   }
-  await page.waitForSelector(step.selector, { state: 'visible', timeout: DEFAULT_TIMEOUT_MS });
+  try {
+    await page.waitForSelector(step.selector, { state: 'visible', timeout: timeoutMs });
+  } catch {
+    throw new Error(`Element not found: "${step.selector}" was not visible within ${timeoutMs}ms`);
+  }
 }
 
 async function executeAssertText(
   page: Page,
   step: UiStep,
+  timeoutMs: number,
 ): Promise<AssertionResult> {
   if (!step.selector) {
     throw new Error('AssertText step requires a selector');
@@ -93,7 +106,11 @@ async function executeAssertText(
     throw new Error('AssertText step requires an expected value');
   }
 
-  await page.waitForSelector(step.selector, { state: 'visible', timeout: DEFAULT_TIMEOUT_MS });
+  try {
+    await page.waitForSelector(step.selector, { state: 'visible', timeout: timeoutMs });
+  } catch {
+    throw new Error(`Element not found: "${step.selector}" was not visible within ${timeoutMs}ms`);
+  }
   const element = page.locator(step.selector).first();
   const actualText = (await element.textContent()) ?? '';
   const trimmedActual = actualText.trim();
@@ -107,7 +124,7 @@ async function executeAssertText(
   };
 }
 
-async function executeLogin(page: Page, step: UiStep): Promise<void> {
+async function executeLogin(page: Page, step: UiStep, timeoutMs: number): Promise<void> {
   const email = step.email ?? '';
   const password = step.password ?? '';
 
@@ -115,19 +132,35 @@ async function executeLogin(page: Page, step: UiStep): Promise<void> {
   const passwordSelector = 'input[type="password"]';
   const submitSelector = 'button[type="submit"]';
 
-  await page.waitForSelector(emailSelector, { state: 'visible', timeout: DEFAULT_TIMEOUT_MS });
+  try {
+    await page.waitForSelector(emailSelector, { state: 'visible', timeout: timeoutMs });
+  } catch {
+    throw new Error(`Login failed: email field "${emailSelector}" not found within ${timeoutMs}ms`);
+  }
   await page.fill(emailSelector, email);
 
-  await page.waitForSelector(passwordSelector, { state: 'visible', timeout: DEFAULT_TIMEOUT_MS });
+  try {
+    await page.waitForSelector(passwordSelector, { state: 'visible', timeout: timeoutMs });
+  } catch {
+    throw new Error(`Login failed: password field "${passwordSelector}" not found within ${timeoutMs}ms`);
+  }
   await page.fill(passwordSelector, password);
 
-  await page.waitForSelector(submitSelector, { state: 'visible', timeout: DEFAULT_TIMEOUT_MS });
+  try {
+    await page.waitForSelector(submitSelector, { state: 'visible', timeout: timeoutMs });
+  } catch {
+    throw new Error(`Login failed: submit button "${submitSelector}" not found within ${timeoutMs}ms`);
+  }
   await page.click(submitSelector);
 }
 
-async function executeLogout(page: Page, step: UiStep): Promise<void> {
+async function executeLogout(page: Page, step: UiStep, timeoutMs: number): Promise<void> {
   if (step.selector) {
-    await page.waitForSelector(step.selector, { state: 'visible', timeout: DEFAULT_TIMEOUT_MS });
+    try {
+      await page.waitForSelector(step.selector, { state: 'visible', timeout: timeoutMs });
+    } catch {
+      throw new Error(`Logout failed: element "${step.selector}" not found within ${timeoutMs}ms`);
+    }
     await page.click(step.selector);
     return;
   }
@@ -192,6 +225,7 @@ export async function runUiTestWithPage(
 ): Promise<UiTestResultWithPage & { cleanup: () => Promise<void> }> {
   const startTime = Date.now();
   const screenshotDir = options?.screenshotDir ?? DEFAULT_SCREENSHOT_DIR;
+  const stepTimeoutMs = testCase.stepTimeout ?? DEFAULT_TIMEOUT_MS;
   const assertions: AssertionResult[] = [];
 
   await launchBrowser();
@@ -201,7 +235,7 @@ export async function runUiTestWithPage(
 
   try {
     context = await browserInstance!.newContext();
-    context.setDefaultTimeout(DEFAULT_TIMEOUT_MS);
+    context.setDefaultTimeout(stepTimeoutMs);
     page = await context.newPage();
 
     page.on('pageerror', () => {});
@@ -215,16 +249,16 @@ export async function runUiTestWithPage(
             await executeNavigate(page, step, testCase.url);
             break;
           case 'click':
-            await executeClick(page, step);
+            await executeClick(page, step, stepTimeoutMs);
             break;
           case 'fill':
-            await executeFill(page, step);
+            await executeFill(page, step, stepTimeoutMs);
             break;
           case 'waitFor':
-            await executeWaitFor(page, step);
+            await executeWaitFor(page, step, stepTimeoutMs);
             break;
           case 'assertText': {
-            const assertionResult = await executeAssertText(page, step);
+            const assertionResult = await executeAssertText(page, step, stepTimeoutMs);
             assertions.push(assertionResult);
             if (!assertionResult.passed) {
               const screenshotPath = await captureFailureScreenshot(page, testCase.name, screenshotDir);
@@ -244,10 +278,10 @@ export async function runUiTestWithPage(
             break;
           }
           case 'login':
-            await executeLogin(page, step);
+            await executeLogin(page, step, stepTimeoutMs);
             break;
           case 'logout':
-            await executeLogout(page, step);
+            await executeLogout(page, step, stepTimeoutMs);
             break;
           default:
             throw new Error(`Unknown step action: ${(step as UiStep).action}`);
@@ -273,7 +307,7 @@ export async function runUiTestWithPage(
     const boundPage = page;
     const boundContext = context;
     const getText = async (selector: string): Promise<string> => {
-      await boundPage.waitForSelector(selector, { state: 'visible', timeout: DEFAULT_TIMEOUT_MS });
+      await boundPage.waitForSelector(selector, { state: 'visible', timeout: stepTimeoutMs });
       const element = boundPage.locator(selector).first();
       const text = (await element.textContent()) ?? '';
       return text.trim();
@@ -328,6 +362,7 @@ export async function runUiTest(
 ): Promise<TestResult> {
   const startTime = Date.now();
   const screenshotDir = options?.screenshotDir ?? DEFAULT_SCREENSHOT_DIR;
+  const stepTimeoutMs = testCase.stepTimeout ?? DEFAULT_TIMEOUT_MS;
   const assertions: AssertionResult[] = [];
 
   // Ensure browser is available
@@ -338,7 +373,7 @@ export async function runUiTest(
 
   try {
     context = await browserInstance!.newContext();
-    context.setDefaultTimeout(DEFAULT_TIMEOUT_MS);
+    context.setDefaultTimeout(stepTimeoutMs);
     page = await context.newPage();
 
     // Suppress unhandled page errors so they don't crash the process
@@ -358,19 +393,19 @@ export async function runUiTest(
             break;
 
           case 'click':
-            await executeClick(page, step);
+            await executeClick(page, step, stepTimeoutMs);
             break;
 
           case 'fill':
-            await executeFill(page, step);
+            await executeFill(page, step, stepTimeoutMs);
             break;
 
           case 'waitFor':
-            await executeWaitFor(page, step);
+            await executeWaitFor(page, step, stepTimeoutMs);
             break;
 
           case 'assertText': {
-            const assertionResult = await executeAssertText(page, step);
+            const assertionResult = await executeAssertText(page, step, stepTimeoutMs);
             assertions.push(assertionResult);
             if (!assertionResult.passed) {
               const screenshotPath = await captureFailureScreenshot(
@@ -392,11 +427,11 @@ export async function runUiTest(
           }
 
           case 'login':
-            await executeLogin(page, step);
+            await executeLogin(page, step, stepTimeoutMs);
             break;
 
           case 'logout':
-            await executeLogout(page, step);
+            await executeLogout(page, step, stepTimeoutMs);
             break;
 
           default:

@@ -6,6 +6,7 @@ import { JSONPath } from 'jsonpath-plus';
 import type { ApiTestCase, TestResult, AssertionResult, Assertion } from './types.js';
 
 const DEFAULT_CONTENT_TYPE = 'application/json';
+const DEFAULT_TIMEOUT_MS = 30_000;
 
 // -----------------------------------------------------------------------------
 // Types
@@ -107,7 +108,7 @@ function evaluateAssertion(assertion: Assertion, response: ParsedResponse): Asse
 // Request Builder
 // -----------------------------------------------------------------------------
 
-function buildRequestInit(testCase: ApiTestCase): RequestInit {
+function buildRequestInit(testCase: ApiTestCase, signal: AbortSignal): RequestInit {
   const headers: Record<string, string> = {
     'Content-Type': DEFAULT_CONTENT_TYPE,
     ...testCase.headers,
@@ -116,6 +117,7 @@ function buildRequestInit(testCase: ApiTestCase): RequestInit {
   const init: RequestInit = {
     method: testCase.method,
     headers,
+    signal,
   };
 
   if (testCase.body !== undefined) {
@@ -166,10 +168,14 @@ export async function runApiTestWithResponse(
   testCase: ApiTestCase,
 ): Promise<ApiTestResultWithResponse> {
   const startTime = performance.now();
+  const timeoutMs = testCase.timeout ?? DEFAULT_TIMEOUT_MS;
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
 
   try {
-    const requestInit = buildRequestInit(testCase);
+    const requestInit = buildRequestInit(testCase, controller.signal);
     const response = await fetch(testCase.url, requestInit);
+    clearTimeout(timeoutId);
     const parsedResponse = await parseResponse(response);
 
     const assertionResults = testCase.assertions.map((assertion) =>
@@ -190,9 +196,15 @@ export async function runApiTestWithResponse(
       responseBody: parsedResponse.bodyJson,
     };
   } catch (networkError) {
+    clearTimeout(timeoutId);
     const duration = Math.round(performance.now() - startTime);
-    const errorMessage =
-      networkError instanceof Error ? networkError.message : String(networkError);
+    const isTimeout =
+      networkError instanceof Error && networkError.name === 'AbortError';
+    const errorMessage = isTimeout
+      ? `Request timed out after ${timeoutMs}ms`
+      : networkError instanceof Error
+        ? networkError.message
+        : String(networkError);
 
     return {
       result: {
@@ -213,10 +225,14 @@ export async function runApiTestWithResponse(
  */
 export async function runApiTest(testCase: ApiTestCase): Promise<TestResult> {
   const startTime = performance.now();
+  const timeoutMs = testCase.timeout ?? DEFAULT_TIMEOUT_MS;
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
 
   try {
-    const requestInit = buildRequestInit(testCase);
+    const requestInit = buildRequestInit(testCase, controller.signal);
     const response = await fetch(testCase.url, requestInit);
+    clearTimeout(timeoutId);
     const parsedResponse = await parseResponse(response);
 
     const assertionResults = testCase.assertions.map((assertion) =>
@@ -234,9 +250,15 @@ export async function runApiTest(testCase: ApiTestCase): Promise<TestResult> {
       assertions: assertionResults,
     };
   } catch (networkError) {
+    clearTimeout(timeoutId);
     const duration = Math.round(performance.now() - startTime);
-    const errorMessage =
-      networkError instanceof Error ? networkError.message : String(networkError);
+    const isTimeout =
+      networkError instanceof Error && networkError.name === 'AbortError';
+    const errorMessage = isTimeout
+      ? `Request timed out after ${timeoutMs}ms`
+      : networkError instanceof Error
+        ? networkError.message
+        : String(networkError);
 
     return {
       name: testCase.name,

@@ -1,0 +1,25 @@
+{
+  "name": "Mixed Test with Variable Chaining",
+  "baseUrl": "https://httpbin.org",
+  "tests": [
+    {
+      "name": "Get UUID from API",
+      "type": "api",
+      "method": "GET",
+      "url": "{{baseUrl}}/uuid",
+      "assertions": [
+        { "type": "status", "expected": 200 }
+      ],
+      "saveAs": { "uuid": "$.uuid" }
+    },
+    {
+      "name": "Verify example.com loads",
+      "type": "ui",
+      "url": "https://example.com",
+      "steps": [
+        { "action": "waitFor", "selector": "h1" },
+        { "action": "assertText", "selector": "h1", "expected": "Example Domain" }
+      ]
+    }
+  ]
+}

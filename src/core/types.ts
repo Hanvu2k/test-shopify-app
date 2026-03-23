@@ -33,12 +33,16 @@ export interface ApiTestCase extends TestCaseBase {
   body?: unknown;
   headers?: Record<string, string>;
   assertions: Assertion[];
+  /** Request timeout in milliseconds (default: 30000) */
+  timeout?: number;
 }
 
 /** UI test case -- drives a Playwright browser through a sequence of steps */
 export interface UiTestCase extends TestCaseBase {
   type: 'ui';
   steps: UiStep[];
+  /** Per-step timeout in milliseconds (default: 30000) */
+  stepTimeout?: number;
 }
 
 /** Discriminated union of all test case types */

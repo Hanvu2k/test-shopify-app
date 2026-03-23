@@ -1,0 +1,14 @@
+{
+  "name": "UI Test Example",
+  "tests": [
+    {
+      "name": "Visit example.com",
+      "type": "ui",
+      "url": "https://example.com",
+      "steps": [
+        { "action": "waitFor", "selector": "h1" },
+        { "action": "assertText", "selector": "h1", "expected": "Example Domain" }
+      ]
+    }
+  ]
+}
