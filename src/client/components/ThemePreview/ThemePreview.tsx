@@ -25,6 +25,15 @@ type PreviewState = 'idle' | 'loading' | 'loaded' | 'blocked' | 'password-prompt
 // ---------------------------------------------------------------------------
 
 const SHOPIFY_PASSWORD_PATH = '/password';
+const PROXY_BASE = '/api/proxy';
+
+/**
+ * Build a proxied URL that routes through our backend reverse proxy.
+ * This strips CSP / X-Frame-Options headers so the iframe can load.
+ */
+function toProxyUrl(targetUrl: string): string {
+  return `${PROXY_BASE}?url=${encodeURIComponent(targetUrl)}`;
+}
 
 // ---------------------------------------------------------------------------
 // ThemePreview — iframe-based Shopify theme preview with password handling
@@ -34,20 +43,47 @@ export const ThemePreview = memo(
   ({ url, password, highlightSelector }: ThemePreviewProps) => {
     const [previewState, setPreviewState] = useState<PreviewState>('idle');
     const [passwordAttempted, setPasswordAttempted] = useState(false);
+    const [proxyUrl, setProxyUrl] = useState('');
     const iframeRef = useRef<HTMLIFrameElement>(null);
     const hasUrl = url.trim().length > 0;
 
     // -----------------------------------------------------------------------
-    // Reset state when URL changes
+    // Reset state when URL changes — submit password first if provided
     // -----------------------------------------------------------------------
     useEffect(() => {
       if (!hasUrl) {
         setPreviewState('idle');
+        setProxyUrl('');
         return;
       }
+
       setPreviewState('loading');
       setPasswordAttempted(false);
-    }, [url, hasUrl]);
+
+      // If a password is provided, POST it through the proxy first so the
+      // session cookie gets set, then load the main page.
+      if (password) {
+        const passwordUrl = new URL(url);
+        passwordUrl.pathname = SHOPIFY_PASSWORD_PATH;
+
+        fetch(toProxyUrl(passwordUrl.href), {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: new URLSearchParams({ password }).toString(),
+          credentials: 'include',
+        })
+          .then(() => {
+            setPasswordAttempted(true);
+            setProxyUrl(toProxyUrl(url));
+          })
+          .catch(() => {
+            // Password submission failed — still try loading the page
+            setProxyUrl(toProxyUrl(url));
+          });
+      } else {
+        setProxyUrl(toProxyUrl(url));
+      }
+    }, [url, password, hasUrl]);
 
     // -----------------------------------------------------------------------
     // Highlight selector changes
@@ -70,22 +106,23 @@ export const ThemePreview = memo(
       const iframe = iframeRef.current;
       if (!iframe) return;
 
-      // Try to detect Shopify password page (same-origin only)
+      // Since we now proxy through localhost, the iframe is same-origin
+      // and we can access contentDocument reliably.
       try {
         const iframeDoc = iframe.contentDocument || iframe.contentWindow?.document;
         if (iframeDoc) {
-          const currentPath = iframe.contentWindow?.location?.pathname ?? '';
+          // Check if the page content is a Shopify password page
           const hasPasswordForm = iframeDoc.querySelector(
             'form[action*="password"]',
           );
+          const bodyText = iframeDoc.body?.textContent ?? '';
+          const looksLikePasswordPage =
+            hasPasswordForm ||
+            bodyText.includes('Enter store using password');
 
-          if (
-            (currentPath.includes(SHOPIFY_PASSWORD_PATH) || hasPasswordForm) &&
-            !passwordAttempted
-          ) {
-            // Password page detected
+          if (looksLikePasswordPage && !passwordAttempted) {
             if (password) {
-              // Attempt auto-submit
+              // Auto-submit password through the proxy
               setPasswordAttempted(true);
               attemptPasswordSubmit(iframeDoc, password);
               return;
@@ -96,12 +133,12 @@ export const ThemePreview = memo(
           }
         }
       } catch {
-        // Cross-origin — cannot inspect, that is expected
+        // Unexpected error accessing document — continue to loaded state
       }
 
       setPreviewState('loaded');
 
-      // Re-apply highlight after page load
+      // Re-apply highlight after page load (now works since same-origin!)
       if (highlightSelector && iframe) {
         // Small delay to let the page render
         requestAnimationFrame(() => {
@@ -175,10 +212,10 @@ export const ThemePreview = memo(
             <PasswordPromptState />
           )}
 
-          {hasUrl && (
+          {hasUrl && proxyUrl && (
             <iframe
               ref={iframeRef}
-              src={url}
+              src={proxyUrl}
               title="Shopify theme preview"
               onLoad={handleIframeLoad}
               onError={handleIframeError}

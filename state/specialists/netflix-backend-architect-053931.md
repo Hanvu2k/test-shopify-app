@@ -1,32 +1,34 @@
 ---
 state: netflix-backend-architect
 project: wishlist-tester-2026-03
-title: {TASK_TITLE}
-description: {TASK_DESCRIPTION_FOR_COMMIT}  # 15-25 words: verb + what + context
-last_updated: 2026-03-21
+title: Reverse proxy for Shopify iframe embedding
+description: Add reverse proxy route to strip CSP/X-Frame-Options headers and rewrite URLs so Shopify pages load in iframe from localhost
+last_updated: 2026-03-23
 ---
 
 ## Task Assignment
 
 | Field | Value |
 |-------|-------|
-| Title | {TASK_TITLE} |
-| Sprint | Sprint {N} |
-| Scope | {SCOPE_DIRECTORY} |
+| Title | Reverse proxy for Shopify iframe embedding |
+| Sprint | Sprint 3 |
+| Scope | src/server/routes/proxy.ts, src/server/index.ts, src/client/components/ThemePreview/ThemePreview.tsx |
 
 ## Current Progress
 
-**Status**: IN_PROGRESS
+**Status**: [COMPLETE]
 
-**Last completed**: [To be filled by agent]
+**Last completed**: All three deliverables implemented and type-checked
 
-**Next steps**: [To be filled by agent]
+**Next steps**: None — task complete
 
 ## Files Created/Modified
 
 | File | Action | Notes |
 |------|--------|-------|
-| (none yet) | - | - |
+| src/server/routes/proxy.ts | CREATE | Reverse proxy endpoint |
+| src/server/index.ts | MODIFY | Register proxy route |
+| src/client/components/ThemePreview/ThemePreview.tsx | MODIFY | Use proxy URL for iframe |
 
 ## Blockers
 

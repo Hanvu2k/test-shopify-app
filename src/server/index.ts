@@ -13,6 +13,7 @@ import cors from 'cors';
 import runRouter from './routes/run.js';
 import suitesRouter from './routes/suites.js';
 import historyRouter from './routes/history.js';
+import proxyRouter from './routes/proxy.js';
 
 const PORT = 3737;
 
@@ -22,7 +23,7 @@ const app = express();
 // Middleware
 // -----------------------------------------------------------------------------
 
-app.use(cors({ origin: 'http://localhost:5273' }));
+app.use(cors({ origin: 'http://localhost:5273', credentials: true }));
 app.use(express.json({ limit: '1mb' }));
 
 // -----------------------------------------------------------------------------
@@ -32,6 +33,7 @@ app.use(express.json({ limit: '1mb' }));
 app.use('/api', runRouter);           // POST /api/run, POST /api/abort
 app.use('/api/suites', suitesRouter); // GET/POST /api/suites, GET/POST /api/suites/:name
 app.use('/api/history', historyRouter); // GET /api/history
+app.use('/api/proxy', proxyRouter);    // GET/POST /api/proxy?url=...
 
 // -----------------------------------------------------------------------------
 // Health check
