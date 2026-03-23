@@ -180,11 +180,11 @@
 **Wireframe**: -
 
 **Deliverables**:
-- [ ] Code review report
+- [x] Code review report
 
 **Acceptance Criteria**:
-- [ ] All code reviewed
-- [ ] LGTM or issues reported
+- [x] All code reviewed
+- [x] LGTM or issues reported
 
 ---
 
