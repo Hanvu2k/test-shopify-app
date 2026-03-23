@@ -29,23 +29,23 @@
 ---
 
 ### Task 5.2: Flow Canvas Component [Frontend]
-**Status**: [NOT STARTED]
-**Estimated**: 4 hours | **Actual**: - hours
+**Status**: [COMPLETE]
+**Estimated**: 4 hours | **Actual**: 2 hours
 **Story Points**: 8
 **Wireframe**: -
 
 **Deliverables**:
-- [ ] src/client/components/FlowBuilder/FlowCanvas.tsx (React Flow canvas with zoom/pan)
-- [ ] src/client/components/FlowBuilder/BlockNode.tsx (custom node component)
-- [ ] src/client/components/FlowBuilder/FlowBuilder.tsx (container: canvas + palette)
-- [ ] src/client/components/FlowBuilder/index.ts
+- [x] src/client/components/FlowBuilder/FlowCanvas.tsx (React Flow canvas with zoom/pan)
+- [x] src/client/components/FlowBuilder/BlockNode.tsx (custom node component)
+- [x] src/client/components/FlowBuilder/FlowBuilder.tsx (container: canvas + palette)
+- [x] src/client/components/FlowBuilder/index.ts
 
 **Acceptance Criteria**:
-- [ ] [FR9.1] Canvas renders with React Flow, supports zoom/pan
-- [ ] [FR9.2] Custom BlockNode displays: icon, label, action type, selector preview
-- [ ] [FR9.4] Blocks connect via edges (linear 1→1)
-- [ ] [FR9.6] Canvas supports select, delete blocks, undo
-- [ ] Dark theme matching app aesthetic
+- [x] [FR9.1] Canvas renders with React Flow, supports zoom/pan
+- [x] [FR9.2] Custom BlockNode displays: icon, label, action type, selector preview
+- [x] [FR9.4] Blocks connect via edges (linear 1→1)
+- [x] [FR9.6] Canvas supports select, delete blocks, undo
+- [x] Dark theme matching app aesthetic
 
 ---
 
