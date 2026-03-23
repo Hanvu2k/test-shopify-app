@@ -37,9 +37,16 @@
 - **EventSource API**: Native browser SSE for streaming test results
 - **lucide-react**: Icons
 
-### UI Layout
-- Split panel: left = JSON editor, right = results stream
-- Top bar: URL input, Run/Abort buttons, Save/Load, History
+### UI Layout (v2 — Visual Flow Builder)
+- Left area (60%): Shopify theme preview (iframe) + theme password input
+- Center area (40%): React Flow canvas with block palette
+- Right panel: Test results stream (unchanged from v1)
+- Top bar: URL input, theme password, Run/Abort, Save/Load, History
+
+### Canvas Library
+- **React Flow** (@xyflow/react): Node-based canvas for drag & drop blocks, edges, zoom/pan
+- Custom node components for each block type (click, fill, waitFor, assertText, login, logout, navigate)
+- Flow ↔ JSON bidirectional converter
 
 ---
 
