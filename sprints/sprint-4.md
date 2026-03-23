@@ -51,19 +51,19 @@
 ---
 
 ### Task 4.3: CI/CD + Packaging [DevOps]
-**Status**: [NOT STARTED]
-**Estimated**: 2 hours | **Actual**: - hours
+**Status**: [COMPLETE]
+**Estimated**: 2 hours | **Actual**: 0.5 hours
 **Story Points**: 3
 **Wireframe**: -
 
 **Deliverables**:
-- [ ] src/.github/workflows/ci.yml (lint, type check, test)
-- [ ] src/Dockerfile (optional, for containerized runs)
+- [x] src/.github/workflows/ci.yml (lint, type check, test)
+- [x] src/Dockerfile (optional, for containerized runs)
 
 **Acceptance Criteria**:
-- [ ] GitHub Actions CI runs on push
-- [ ] Type checking passes in CI
-- [ ] Tool can be run without Docker (node + npm only)
+- [x] GitHub Actions CI runs on push
+- [x] Type checking passes in CI
+- [x] Tool can be run without Docker (node + npm only)
 
 ---
 
